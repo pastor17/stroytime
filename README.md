@@ -121,7 +121,7 @@ coverEmoji: "🦄"             # 卡片与详情页封面表情
 > 本仓库采用「双分支」结构：`story` 分支存放故事站（由 GitHub Pages 部署），`main` 分支存放《中华五千年历史简说》README（与故事站无关）。
 
 1. 把本目录推到 GitHub 仓库的 `story` 分支。
-2. `hugo.toml` 中的 `baseURL` 已设为 `https://lifepagee.github.io/stroytime/`（项目页地址，可按需修改）。
+2. `hugo.toml` 中的 `baseURL` 已设为 `https://pastor17.github.io/stroytime/`（项目页地址，可按需修改）。
 3. 打开仓库 **Settings → Pages**，将 **Source** 改为 **GitHub Actions**（并确认部署分支为 `story`）。
 4. 推送 `story` 分支后，`.github/workflows/hugo.yml` 会自动构建并部署；也可在 **Actions** 页手动触发。
 
