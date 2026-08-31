@@ -1,4 +1,4 @@
-{{- /* 故事卡片。上下文为单个故事 Page */ -}}
+{{- /* 故事卡片。上下文为单个故事 Page（无嵌套 <a>，避免 HTML 解析出错） */ -}}
 {{- $coverEmoji := site.Params.defaultCoverEmoji -}}
 {{- with .Params.coverEmoji }}{{ $coverEmoji = . }}{{ end -}}
 {{- $catColor := "#e9773f" -}}
@@ -9,33 +9,31 @@
   {{- end -}}
 {{- end -}}
 <article class="card">
-  <a class="card__link" href="{{ .RelPermalink }}">
-    <div class="card__cover" style="--cover-color: {{ $catColor }}">
-      <span class="card__emoji" aria-hidden="true">{{ $coverEmoji }}</span>
-    </div>
-    <div class="card__body">
-      <div class="card__badges">
-        {{- range .Params.ages -}}
-          {{ partial "badge.html" (dict "taxonomy" "ages" "term" .) }}
-        {{- end -}}
-        {{- range .Params.categories -}}
-          {{ partial "badge.html" (dict "taxonomy" "categories" "term" .) }}
-        {{- end -}}
-      </div>
-      <h3 class="card__title">{{ .Title }}</h3>
-      {{- with .Params.summary -}}
-        <p class="card__summary">{{ . | plainify | truncate 96 }}</p>
-      {{- else -}}
-        <p class="card__summary">{{ .Summary | plainify | truncate 96 }}</p>
-      {{- end -}}
-      {{- with .Params.moral -}}
-        <p class="card__moral">💡 {{ . }}</p>
-      {{- end -}}
-      <div class="card__meta">
-        <span>约 {{ .WordCount }} 字</span>
-        <span>·</span>
-        <span>阅读约 {{ .ReadingTime }} 分钟</span>
-      </div>
-    </div>
+  <a class="card__cover" href="{{ .RelPermalink }}" style="--cover-color: {{ $catColor }}" aria-label="{{ .Title }}">
+    <span class="card__emoji" aria-hidden="true">{{ $coverEmoji }}</span>
   </a>
+  <div class="card__body">
+    <div class="card__badges">
+      {{- range .Params.ages -}}
+        {{ partial "badge.html" (dict "taxonomy" "ages" "term" .) }}
+      {{- end -}}
+      {{- range .Params.categories -}}
+        {{ partial "badge.html" (dict "taxonomy" "categories" "term" .) }}
+      {{- end -}}
+    </div>
+    <h3 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    {{- with .Params.summary -}}
+      <p class="card__summary">{{ . | plainify | truncate 96 }}</p>
+    {{- else -}}
+      <p class="card__summary">{{ .Summary | plainify | truncate 96 }}</p>
+    {{- end -}}
+    {{- with .Params.moral -}}
+      <p class="card__moral">💡 {{ . }}</p>
+    {{- end -}}
+    <div class="card__meta">
+      <span>约 {{ .WordCount }} 字</span>
+      <span>·</span>
+      <span>阅读约 {{ .ReadingTime }} 分钟</span>
+    </div>
+  </div>
 </article>

@@ -133,18 +133,18 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 /* ---------- 卡片网格 ---------- */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
 
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.18s, box-shadow 0.18s; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.18s, box-shadow 0.18s; display: flex; flex-direction: column; }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.card__link { display: flex; flex-direction: column; height: 100%; color: var(--ink); }
-.card__link:hover { text-decoration: none; color: var(--ink); }
 .card__cover {
-  height: 120px; display: grid; place-items: center;
+  height: 120px; display: grid; place-items: center; text-decoration: none; color: inherit;
   background: linear-gradient(135deg, color-mix(in srgb, var(--cover-color, #e9773f) 18%, #fff), color-mix(in srgb, var(--cover-color, #e9773f) 6%, #fff));
 }
 .card__emoji { font-size: 46px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.08)); }
 .card__body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
 .card__badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
 .card__title { font-size: 1.12rem; margin: 0 0 8px; line-height: 1.4; }
+.card__title a { color: var(--ink); text-decoration: none; }
+.card__title a:hover { color: var(--primary-dark); }
 .card__summary { color: var(--ink-soft); font-size: 0.9rem; margin: 0 0 10px; flex: 1; }
 .card__moral { color: var(--primary-dark); font-size: 0.84rem; margin: 0 0 12px; }
 .card__meta { display: flex; gap: 8px; font-size: 0.8rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; }
