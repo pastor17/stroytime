@@ -13,6 +13,7 @@ summaryLength = 120
 enableEmoji = true
 enableRobotsTXT = true
 disableKinds = ['RSS']
+disableHugoGeneratorInject = true
 
 [params]
   subtitle = '照亮成长每一步的故事'
