@@ -1,0 +1,38 @@
+{{ define "main" }}
+{{- $taxonomy := .Data.Plural -}}
+{{- $stories := where site.RegularPages "Section" "stories" -}}
+<div class="container page-head">
+  {{- if eq $taxonomy "ages" -}}
+    <h1 class="page-title">按年龄段阅读</h1>
+    <p class="page-subtitle">从 4 岁到 14 岁，每个阶段的故事长度、语言难度和主题深度都经过精心设计。</p>
+  {{- else if eq $taxonomy "categories" -}}
+    <h1 class="page-title">按主题分类</h1>
+    <p class="page-subtitle">从生活自理到文化素养，从情绪心理到想象力，覆盖孩子成长的方方面面。</p>
+  {{- else -}}
+    <h1 class="page-title">{{ .Title }}</h1>
+  {{- end -}}
+</div>
+<div class="container">
+  {{- if eq $taxonomy "ages" -}}
+    <div class="age-grid">
+      {{- range hugo.Data.ages -}}
+        {{- $count := len (where $stories "Params.ages" "intersect" (slice .slug)) -}}
+        {{ partial "age-card.html" (dict "age" . "count" $count) }}
+      {{- end -}}
+    </div>
+  {{- else if eq $taxonomy "categories" -}}
+    <div class="cat-grid">
+      {{- range hugo.Data.categories -}}
+        {{- $count := len (where $stories "Params.categories" "intersect" (slice .slug)) -}}
+        {{ partial "cat-card.html" (dict "cat" . "count" $count) }}
+      {{- end -}}
+    </div>
+  {{- else -}}
+    <div class="term-grid">
+      {{- range .Data.Terms.Alphabetical -}}
+        <a class="term-pill" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}<span>{{ .Count }}</span></a>
+      {{- end -}}
+    </div>
+  {{- end -}}
+</div>
+{{ end }}

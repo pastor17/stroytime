@@ -1,0 +1,42 @@
+# 故事分类元数据（slug 需与文章 front matter 中的 categories 值完全一致）
+- slug: "life-habits"
+  name: "生活习惯与自理"
+  emoji: "🪥"
+  color: "#e88a3a"
+  description: "作息、卫生、安全、独立——让孩子学会照顾自己、管理生活。"
+
+- slug: "emotion"
+  name: "情绪与心理健康"
+  emoji: "💗"
+  color: "#e26d8a"
+  description: "认识情绪、面对挫折、建立自信，滋养丰盈而坚韧的精神世界。"
+
+- slug: "values"
+  name: "品德与价值观"
+  emoji: "🏮"
+  color: "#d4574e"
+  description: "诚实、勇敢、善良、责任、分享，把美好的品格种进心里。"
+
+- slug: "culture"
+  name: "传统文化与文学素养"
+  emoji: "🏯"
+  color: "#b0873c"
+  description: "成语、诗词、历史、民俗与经典，在故事中浸润文化根脉。"
+
+- slug: "science"
+  name: "科学启蒙与自然"
+  emoji: "🔭"
+  color: "#3f9a8a"
+  description: "自然现象、动植物与科学原理，点燃探索世界的好奇心。"
+
+- slug: "imagination"
+  name: "想象力与奇幻冒险"
+  emoji: "🦄"
+  color: "#7a6cc0"
+  description: "童话、幻想与冒险，让想象力带孩子在广阔天地自由翱翔。"
+
+- slug: "social"
+  name: "人际交往与社会认知"
+  emoji: "🤝"
+  color: "#4a8fd4"
+  description: "友谊、合作、规则与同理心，学会与他人和世界相处。"

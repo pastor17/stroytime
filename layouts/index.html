@@ -1,0 +1,78 @@
+{{ define "main" }}
+{{- $stories := where site.RegularPages "Section" "stories" -}}
+
+<section class="hero">
+  <div class="container hero__inner">
+    <p class="hero__eyebrow">🌱 面向 4–14 岁孩子的原创故事资源站</p>
+    <h1 class="hero__title">用故事，<span>照亮成长每一步</span></h1>
+    <p class="hero__desc">{{ site.Params.description }}</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="{{ "stories/" | relURL }}">📚 开始阅读</a>
+      <a class="btn btn--ghost" href="{{ "ages/" | relURL }}">按年龄段选故事</a>
+    </div>
+    <div class="hero__stats">
+      <div class="stat"><strong>{{ len $stories }}</strong><span>篇故事</span></div>
+      <div class="stat"><strong>{{ len hugo.Data.ages }}</strong><span>个年龄段</span></div>
+      <div class="stat"><strong>{{ len hugo.Data.categories }}</strong><span>个主题分类</span></div>
+      <div class="stat"><strong>8000+</strong><span>字 / 篇</span></div>
+    </div>
+  </div>
+</section>
+
+{{- with $stories.ByDate.Reverse -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">最新故事</h2>
+      <a class="section__more" href="{{ "stories/" | relURL }}">查看全部 →</a>
+    </div>
+    <div class="card-grid">
+      {{- range first 6 . -}}
+        {{ partial "story-card.html" . }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">按年龄段阅读</h2>
+      <a class="section__more" href="{{ "ages/" | relURL }}">全部年龄段 →</a>
+    </div>
+    <div class="age-grid">
+      {{- range hugo.Data.ages -}}
+        {{- $count := len (where $stories "Params.ages" "intersect" (slice .slug)) -}}
+        {{ partial "age-card.html" (dict "age" . "count" $count) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">按主题分类</h2>
+      <a class="section__more" href="{{ "categories/" | relURL }}">全部分类 →</a>
+    </div>
+    <div class="cat-grid">
+      {{- range hugo.Data.categories -}}
+        {{- $count := len (where $stories "Params.categories" "intersect" (slice .slug)) -}}
+        {{ partial "cat-card.html" (dict "cat" . "count" $count) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <h2 class="section__title">如何陪孩子读这些故事</h2>
+    <div class="reading-guide">
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🪑</span><h3>亲子共读</h3><p>4–6 岁建议家长逐句朗读、边读边聊；7 岁后逐步过渡到自主阅读。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">💬</span><h3>读后讨论</h3><p>每篇文末附「读后想一想」，引导孩子复述情节、说出感受与想法。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🔄</span><h3>反复重读</h3><p>好故事值得读很多遍，每一次都会读出新的理解与共鸣。</p></div>
+    </div>
+  </div>
+</section>
+{{ end }}

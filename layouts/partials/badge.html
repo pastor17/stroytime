@@ -1,0 +1,27 @@
+{{- /* 渲染单个分类/年龄徽章。用法：{{ partial "badge.html" (dict "taxonomy" "ages" "term" "4-6") }} */ -}}
+{{- $taxonomy := .taxonomy -}}
+{{- $term := .term -}}
+{{- $name := $term -}}
+{{- $emoji := "" -}}
+{{- $color := "#9aa0a6" -}}
+{{- if eq $taxonomy "ages" -}}
+  {{- range first 1 (where hugo.Data.ages "slug" $term) -}}
+    {{- if .name }}{{ $name = .name }}{{ end -}}
+    {{- if .emoji }}{{ $emoji = .emoji }}{{ end -}}
+    {{- if .color }}{{ $color = .color }}{{ end -}}
+  {{- end -}}
+{{- else if eq $taxonomy "categories" -}}
+  {{- range first 1 (where hugo.Data.categories "slug" $term) -}}
+    {{- if .name }}{{ $name = .name }}{{ end -}}
+    {{- if .emoji }}{{ $emoji = .emoji }}{{ end -}}
+    {{- if .color }}{{ $color = .color }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $href := "" -}}
+{{- with site.GetPage (printf "/%s/%s" $taxonomy $term) -}}
+  {{- $href = .RelPermalink -}}
+{{- end -}}
+<a class="badge" href="{{ $href }}" style="--badge-color: {{ $color }}">
+  {{- with $emoji }}<span class="badge__emoji" aria-hidden="true">{{ . }}</span>{{ end -}}
+  <span class="badge__text">{{ $name }}</span>
+</a>

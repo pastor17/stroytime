@@ -1,0 +1,49 @@
+{{ define "main" }}
+{{- $taxonomy := .Data.Plural -}}
+{{- $term := .Data.Term -}}
+{{- $name := $term -}}
+{{- $emoji := "" -}}
+{{- $color := "#e9773f" -}}
+{{- $desc := "" -}}
+{{- if eq $taxonomy "ages" -}}
+  {{- range first 1 (where hugo.Data.ages "slug" $term) -}}
+    {{- if .name }}{{ $name = .name }}{{ end -}}
+    {{- if .emoji }}{{ $emoji = .emoji }}{{ end -}}
+    {{- if .color }}{{ $color = .color }}{{ end -}}
+    {{- if .description }}{{ $desc = .description }}{{ end -}}
+  {{- end -}}
+{{- else if eq $taxonomy "categories" -}}
+  {{- range first 1 (where hugo.Data.categories "slug" $term) -}}
+    {{- if .name }}{{ $name = .name }}{{ end -}}
+    {{- if .emoji }}{{ $emoji = .emoji }}{{ end -}}
+    {{- if .color }}{{ $color = .color }}{{ end -}}
+    {{- if .description }}{{ $desc = .description }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- $overview := "" -}}
+{{- if eq $taxonomy "ages" }}{{ $overview = "年龄段" }}{{ else if eq $taxonomy "categories" }}{{ $overview = "故事分类" }}{{ else }}{{ $overview = $taxonomy }}{{ end -}}
+
+<div class="container page-head term-head" style="--term-color: {{ $color }}">
+  <nav class="breadcrumb" aria-label="面包屑">
+    <a href="{{ site.Home.RelPermalink }}">首页</a><span>/</span>
+    <a href="{{ printf "/%s/" $taxonomy | relURL }}">{{ $overview }}</a><span>/</span>
+    <span>{{ $name }}</span>
+  </nav>
+  <h1 class="page-title">{{ with $emoji }}{{ . }} {{ end }}{{ $name }}</h1>
+  {{- with $desc -}}<p class="page-subtitle">{{ . }}</p>{{- end -}}
+  <p class="term-count">共 {{ len .Pages }} 篇故事</p>
+</div>
+<div class="container">
+  {{- $paginator := .Paginate .Pages -}}
+  {{- if gt (len $paginator.Pages) 0 -}}
+  <div class="card-grid">
+    {{- range $paginator.Pages -}}
+      {{ partial "story-card.html" . }}
+    {{- end -}}
+  </div>
+  {{ partial "pagination.html" $paginator }}
+  {{- else -}}
+  <p class="empty">这个分类下的故事正在创作中，敬请期待～</p>
+  {{- end -}}
+</div>
+{{ end }}

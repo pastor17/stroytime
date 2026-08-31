@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#fbe8db"/>
+  <!-- 打开的书 -->
+  <path d="M32 22 C26 16 18 14 10 14 L10 44 C18 44 26 46 32 50 C38 46 46 44 54 44 L54 14 C46 14 38 16 32 22 Z" fill="#e9773f"/>
+  <path d="M32 22 C32 22 32 22 32 22 L32 50" stroke="#fff" stroke-width="2.4" fill="none"/>
+  <!-- 灯塔光束 -->
+  <path d="M32 22 L26 8 L38 8 Z" fill="#ffd166"/>
+  <circle cx="32" cy="22" r="2.4" fill="#fff"/>
+</svg>

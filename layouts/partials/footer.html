@@ -1,0 +1,33 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__about">
+        <h2>📖 {{ site.Title }}</h2>
+        <p>{{ site.Params.description }}</p>
+      </div>
+      <div class="site-footer__col">
+        <h3>年龄段</h3>
+        {{ range hugo.Data.ages }}
+          {{ $age := . }}
+          {{ with site.GetPage (printf "/ages/%s" $age.slug) }}
+            <a href="{{ .RelPermalink }}">{{ $age.emoji }} {{ $age.name }}</a>
+          {{ else }}
+            <span class="site-footer__soon">{{ $age.emoji }} {{ $age.name }}</span>
+          {{ end }}
+        {{ end }}
+      </div>
+      <div class="site-footer__col">
+        <h3>故事分类</h3>
+        {{ range hugo.Data.categories }}
+          {{ $cat := . }}
+          {{ with site.GetPage (printf "/categories/%s" $cat.slug) }}
+            <a href="{{ .RelPermalink }}">{{ $cat.emoji }} {{ $cat.name }}</a>
+          {{ else }}
+            <span class="site-footer__soon">{{ $cat.emoji }} {{ $cat.name }}</span>
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+    <p class="site-footer__copyright">{{ site.Params.copyright }} · 用 <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a> 构建</p>
+  </div>
+</footer>

@@ -1,0 +1,18 @@
+{{- /* 分类卡片。用法：{{ partial "cat-card.html" (dict "cat" . "count" $count) }} */ -}}
+{{- $cat := .cat -}}
+{{- $count := .count -}}
+{{- with site.GetPage (printf "/categories/%s" $cat.slug) -}}
+<a class="cat-card" href="{{ .RelPermalink }}" style="--cat-color: {{ $cat.color }}">
+  <span class="cat-card__emoji" aria-hidden="true">{{ $cat.emoji }}</span>
+  <h3 class="cat-card__name">{{ $cat.name }}</h3>
+  <p class="cat-card__desc">{{ $cat.description }}</p>
+  <span class="cat-card__count">{{ $count }} 篇故事</span>
+</a>
+{{- else -}}
+<div class="cat-card cat-card--soon" style="--cat-color: {{ $cat.color }}">
+  <span class="cat-card__emoji" aria-hidden="true">{{ $cat.emoji }}</span>
+  <h3 class="cat-card__name">{{ $cat.name }}</h3>
+  <p class="cat-card__desc">{{ $cat.description }}</p>
+  <span class="cat-card__count">即将上线</span>
+</div>
+{{- end -}}

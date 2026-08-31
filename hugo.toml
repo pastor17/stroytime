@@ -1,0 +1,52 @@
+# =============================================================
+# 童心灯塔 · 成长故事馆 —— Hugo 站点配置
+# 面向 4–14 岁儿童的原创故事资源站
+# =============================================================
+
+# GitHub Pages 项目页地址：https://<用户名>.github.io/<仓库名>/
+# 部署前请把这里改成你的真实地址（本地 hugo server 会自动覆盖为 localhost）
+baseURL = 'https://lifepagee.github.io/stroytime/'
+title = '童心灯塔'
+locale = 'zh-CN'
+hasCJKLanguage = true
+summaryLength = 120
+enableEmoji = true
+enableRobotsTXT = true
+disableKinds = ['RSS']
+
+[params]
+  subtitle = '照亮成长每一步的故事'
+  description = '面向 4–14 岁儿童的原创故事资源站，涵盖生活习惯、情绪心理、品德价值观、传统文化、科学启蒙、想象力与交往认知，每篇 8000–15000 字，可亲子共读或自主阅读。'
+  author = '童心灯塔编辑部'
+  siteName = '童心灯塔'
+  copyright = '© 2026 童心灯塔 · 成长故事馆'
+  defaultCoverEmoji = '📚'
+  # 各年龄段色板（与 data/ages.yaml 保持一致）
+  ageColors = ['#6fae5c', '#4a8fd4', '#e88a3a', '#9a6cb8']
+
+# -------------------------------------------------------------
+# 分类体系（taxonomy）
+#   ages        → 年龄段（4-6 / 7-9 / 10-12 / 13-14）
+#   categories  → 故事分类（7 类）
+# -------------------------------------------------------------
+[taxonomies]
+  age = 'ages'
+  category = 'categories'
+  tag = 'tags'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
+
+[permalinks]
+  stories = '/story/:slug/'
+
+# 分页：全部故事列表每页 12 篇
+[pagination]
+  pagerSize = 12
+  path = 'page'

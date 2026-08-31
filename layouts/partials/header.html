@@ -1,0 +1,21 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="{{ site.Home.RelPermalink }}">
+      <span class="brand__logo" aria-hidden="true">📖</span>
+      <span class="brand__text">
+        <strong>{{ site.Title }}</strong>
+        <small>{{ site.Params.subtitle }}</small>
+      </span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="siteNav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav" aria-label="主导航">
+      <a href="{{ site.Home.RelPermalink }}">首页</a>
+      <a href="{{ "stories/" | relURL }}">全部故事</a>
+      <a href="{{ "ages/" | relURL }}">年龄段</a>
+      <a href="{{ "categories/" | relURL }}">故事分类</a>
+      <a href="{{ "about/" | relURL }}">关于</a>
+    </nav>
+  </div>
+</header>

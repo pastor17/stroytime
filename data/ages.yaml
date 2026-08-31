@@ -1,0 +1,36 @@
+# 年龄段元数据（slug 需与文章 front matter 中的 ages 值完全一致）
+- slug: "4-6"
+  name: "4–6 岁"
+  title: "幼儿启蒙段"
+  range: "幼儿园"
+  description: "习惯养成与好奇心萌芽的黄金期：语言简单温暖，情节直观生动，适合亲子共读。"
+  emoji: "🌱"
+  color: "#6fae5c"
+  order: 1
+
+- slug: "7-9"
+  name: "7–9 岁"
+  title: "低年级段"
+  range: "小学低年级"
+  description: "想象力最旺盛、品格开始塑造的阶段：故事生动有趣，把朴素的道理藏在情节里。"
+  emoji: "🌿"
+  color: "#4a8fd4"
+  order: 2
+
+- slug: "10-12"
+  name: "10–12 岁"
+  title: "高年级段"
+  range: "小学高年级"
+  description: "理解力与求知欲显著增强：故事更富层次，注入文化底蕴与思维方法。"
+  emoji: "🌳"
+  color: "#e88a3a"
+  order: 3
+
+- slug: "13-14"
+  name: "13–14 岁"
+  title: "初中段"
+  range: "初中"
+  description: "自我意识觉醒、同伴关系复杂：故事贴近青春心事，探讨成长、选择与责任。"
+  emoji: "🌟"
+  color: "#9a6cb8"
+  order: 4

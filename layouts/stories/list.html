@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{- $stories := where site.RegularPages "Section" "stories" -}}
+<div class="container page-head">
+  <h1 class="page-title">全部故事</h1>
+  <p class="page-subtitle">{{ len $stories }} 篇原创故事，按年龄与主题分类，每篇 8000–15000 字，可亲子共读或自主阅读。</p>
+</div>
+<div class="container">
+  {{- $paginator := .Paginate ($stories.ByDate.Reverse) -}}
+  {{- if gt (len $paginator.Pages) 0 -}}
+  <div class="card-grid">
+    {{- range $paginator.Pages -}}
+      {{ partial "story-card.html" . }}
+    {{- end -}}
+  </div>
+  {{ partial "pagination.html" $paginator }}
+  {{- else -}}
+  <p class="empty">故事正在陆续上线，敬请期待～</p>
+  {{- end -}}
+</div>
+{{ end }}

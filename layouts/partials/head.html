@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }} · {{ site.Params.subtitle }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+{{- $desc := "" -}}
+{{- if .IsHome -}}
+  {{- $desc = site.Params.description -}}
+{{- else if .Description -}}
+  {{- $desc = .Description -}}
+{{- else if .Summary -}}
+  {{- $desc = .Summary | plainify | truncate 160 -}}
+{{- end -}}
+<meta name="description" content="{{ $desc }}">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+<meta name="theme-color" content="#e9773f">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta name="twitter:card" content="summary">
+{{- $css := resources.Get "css/main.css" -}}
+{{- if not hugo.IsServer }}{{ $css = $css | minify | fingerprint }}{{ end -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">

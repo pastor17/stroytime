@@ -1,0 +1,82 @@
+{{ define "main" }}
+<article class="story">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="{{ site.Home.RelPermalink }}">首页</a><span>/</span>
+      <a href="{{ "stories/" | relURL }}">全部故事</a><span>/</span>
+      <span>{{ .Title }}</span>
+    </nav>
+
+    <header class="story-header">
+      <div class="story-header__emoji" aria-hidden="true">{{ with .Params.coverEmoji }}{{ . }}{{ else }}{{ site.Params.defaultCoverEmoji }}{{ end }}</div>
+      <div class="story-header__badges">
+        {{- range .Params.ages -}}{{ partial "badge.html" (dict "taxonomy" "ages" "term" .) }}{{- end -}}
+        {{- range .Params.categories -}}{{ partial "badge.html" (dict "taxonomy" "categories" "term" .) }}{{- end -}}
+      </div>
+      <h1 class="story-header__title">{{ .Title }}</h1>
+      {{- with .Params.summary -}}<p class="story-header__summary">{{ . }}</p>{{- end -}}
+      <div class="story-header__meta">
+        <span>✍️ {{ .Params.author | default site.Params.author }}</span>
+        <span>📝 约 {{ .WordCount }} 字</span>
+        <span>⏱️ 阅读约 {{ .ReadingTime }} 分钟</span>
+      </div>
+      {{- with .Params.moral -}}
+      <div class="story-moral">💡 <strong>故事想告诉你：</strong>{{ . }}</div>
+      {{- end -}}
+    </header>
+
+    {{- with .TableOfContents -}}
+    <details class="toc">
+      <summary>📑 章节目录</summary>
+      <div class="toc__body">{{ . }}</div>
+    </details>
+    {{- end -}}
+
+    <div class="story-tools" aria-label="阅读工具">
+      <span class="story-tools__label">字号</span>
+      <button class="story-tools__btn" id="fontDown" type="button" aria-label="减小字号">A−</button>
+      <button class="story-tools__btn" id="fontReset" type="button" aria-label="恢复标准字号">标准</button>
+      <button class="story-tools__btn" id="fontUp" type="button" aria-label="增大字号">A＋</button>
+      <button class="story-tools__btn story-tools__btn--top" id="backToTop" type="button" aria-label="回到顶部">↑ 回到顶部</button>
+    </div>
+
+    <div class="story-content" id="storyBody">
+      {{ .Content }}
+    </div>
+
+    <footer class="story-footer">
+      {{- with .Params.tags -}}
+      <div class="story-tags">
+        {{- range . -}}
+          <a class="tag" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">#{{ . }}</a>
+        {{- end -}}
+      </div>
+      {{- end -}}
+      <nav class="story-pager">
+        {{- with .PrevInSection -}}<a class="story-pager__link" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{- end -}}
+        {{- with .NextInSection -}}<a class="story-pager__link story-pager__link--next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{- end -}}
+      </nav>
+    </footer>
+  </div>
+</article>
+
+{{- $all := where site.RegularPages "Section" "stories" -}}
+{{- $related := where $all "Params.ages" "intersect" .Params.ages -}}
+{{- $related = where $related "RelPermalink" "ne" .RelPermalink -}}
+{{- $related = first 3 $related -}}
+{{- if gt (len $related) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">相关故事</h2>
+      <a class="section__more" href="{{ "stories/" | relURL }}">查看全部 →</a>
+    </div>
+    <div class="card-grid">
+      {{- range $related -}}
+        {{ partial "story-card.html" . }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+{{ end }}
