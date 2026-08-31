@@ -40,3 +40,33 @@
   emoji: "🤝"
   color: "#4a8fd4"
   description: "友谊、合作、规则与同理心，学会与他人和世界相处。"
+
+- slug: "arts-music"
+  name: "艺术与音乐素养"
+  emoji: "🎨"
+  color: "#e84393"
+  description: "音乐、美术、手工与审美，让美成为孩子一生的底色。"
+
+- slug: "money-wisdom"
+  name: "财商与生活智慧"
+  emoji: "💰"
+  color: "#d4a017"
+  description: "金钱观、储蓄与选择，培养孩子与财富相处的智慧。"
+
+- slug: "safety"
+  name: "安全教育"
+  emoji: "🦺"
+  color: "#2e7d32"
+  description: "自我保护、交通、居家与网络安全，教孩子守护自己的平安。"
+
+- slug: "thinking"
+  name: "逻辑与思维"
+  emoji: "🧩"
+  color: "#5e35b1"
+  description: "观察、推理与解决问题，点亮孩子逻辑思辨的头脑。"
+
+- slug: "eco"
+  name: "环保与生态"
+  emoji: "🌍"
+  color: "#00897b"
+  description: "爱护自然、珍惜资源，在孩子心里种下绿色的种子。"
