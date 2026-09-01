@@ -63,6 +63,7 @@
   var audioStop = document.getElementById("audioStop");
   var audioVoice = document.getElementById("audioVoice");
   var audioRate = document.getElementById("audioRate");
+  var audioPitch = document.getElementById("audioPitch");
 
   if (storyBody && audioBar && audioToggle && audioStop && "speechSynthesis" in window) {
     var synth = window.speechSynthesis;
@@ -74,20 +75,51 @@
 
     audioBar.hidden = false;
 
+    /* 高音质音源（可选）：若存在预生成的 MP3，主播放优先走音频文件，系统语音作兜底 */
+    var mp3Url = audioBar.getAttribute("data-audio") || "";
+    var mp3 = null;
+    var mp3Ready = false;
+
+    var setHint = function (text) {
+      var hint = audioBar.querySelector(".story-audio__hint");
+      if (hint) hint.textContent = text;
+    };
+
+    if (mp3Url && "fetch" in window) {
+      mp3 = new Audio();
+      mp3.preload = "none";
+      mp3.src = mp3Url;
+      fetch(mp3Url, { method: "HEAD" })
+        .then(function (res) {
+          mp3Ready = res.ok;
+          if (mp3Ready) setHint("已启用高音质朗读 · 系统语音兜底");
+        })
+        .catch(function () { mp3Ready = false; });
+    }
+
+    /* 柔美女声打分：按“音色柔和/自然”的常见中文神经语音优先排序 */
+    var voiceScore = function (v) {
+      var n = v.name || "";
+      var s = 0;
+      if (/xiaoxiao|晓晓|xiaoyi|晓伊|yunxi|云希|yunjian|云健|xiaobei|晓北/i.test(n)) s += 100;
+      if (/ting-?ting|婷婷|mei-?jia|美佳|xin-?yue|欣悦|sinji|诗诗|shanshan|珊珊|姗姗|siri/i.test(n)) s += 90;
+      if (/huihui|慧慧|yaoyao|瑶瑶|wanwan|湾湾|xiaoqiao|晓乔|xiaoxuan|晓萱/i.test(n)) s += 80;
+      if (/female|女|woman/i.test(n)) s += 40;
+      if (/natural|online|enhanced|neural|premium/i.test(n)) s += 20;
+      if (/microsoft|edge/i.test(n)) s += 10;
+      if (/apple/i.test(n)) s += 8;
+      return s;
+    };
+
     var buildVoiceList = function () {
       voices = (synth.getVoices() || []).filter(function (v) {
         return /^zh/i.test(v.lang);
       });
-      // 女声优先：常见女声名字排前，男声排后
-      voices.sort(function (a, b) {
-        var fa = /female|女|huihui|yaoyao|xiaoxiao|ting-ting|mei-jia|shanshan|xiaoyi/i.test(a.name) ? 0 : 1;
-        var fb = /female|女|huihui|yaoyao|xiaoxiao|ting-ting|mei-jia|shanshan|xiaoyi/i.test(b.name) ? 0 : 1;
-        return fa - fb;
-      });
+      voices.sort(function (a, b) { return voiceScore(b) - voiceScore(a); });
       audioVoice.innerHTML = "";
       var def = document.createElement("option");
       def.value = "";
-      def.textContent = "系统默认（女声）";
+      def.textContent = "系统默认（兜底）";
       audioVoice.appendChild(def);
       voices.forEach(function (v, i) {
         var opt = document.createElement("option");
@@ -95,6 +127,10 @@
         opt.textContent = v.name + " · " + v.lang;
         audioVoice.appendChild(opt);
       });
+      // 自动选中当前设备上最柔美的中文女声
+      if (voices.length && voiceScore(voices[0]) >= 40) {
+        audioVoice.value = "0";
+      }
     };
 
     buildVoiceList();
@@ -108,6 +144,9 @@
     };
     var currentRate = function () {
       return audioRate ? parseFloat(audioRate.value) : 1;
+    };
+    var currentPitch = function () {
+      return audioPitch ? parseFloat(audioPitch.value) : 1;
     };
 
     // 收集正文块（章节标题、段落、列表项、引用）
@@ -145,8 +184,35 @@
 
     var stopSpeaking = function () {
       synth.cancel();
+      if (mp3 && !mp3.paused) { try { mp3.pause(); } catch (e) {} }
       resetUI();
     };
+
+    /* 高音质 MP3 播放（整篇），结束后复位 */
+    var playMp3 = function () {
+      if (!mp3) return;
+      if (!mp3.paused) {
+        mp3.pause();
+        audioToggle.textContent = "▶ 继续";
+        return;
+      }
+      mp3.play().then(function () {
+        audioToggle.textContent = "⏸ 暂停";
+        audioStop.disabled = false;
+      }).catch(function () {
+        mp3Ready = false;
+        setHint("系统语音朗读 · 默认女声");
+        startFrom(0);
+      });
+    };
+
+    if (mp3) {
+      mp3.addEventListener("ended", function () { resetUI(); });
+      mp3.addEventListener("error", function () {
+        mp3Ready = false;
+        setHint("系统语音朗读 · 默认女声");
+      });
+    }
 
     var splitSentences = function (text) {
       return (text.match(/[^。！？!?；;]+[。！？!?；;]?/g) || [text])
@@ -186,6 +252,7 @@
         u.lang = voice ? voice.lang : "zh-CN";
         if (voice) u.voice = voice;
         u.rate = currentRate();
+        u.pitch = currentPitch();
         u.onend = function () { si++; nextSentence(); };
         synth.speak(u);
       };
@@ -202,6 +269,11 @@
     };
 
     var toggleSpeak = function () {
+      // 有高音质音源时，主按钮优先播放 MP3
+      if (mp3Ready && mp3) {
+        playMp3();
+        return;
+      }
       if (speaking) {
         if (paused) {
           synth.resume();

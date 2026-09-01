@@ -40,7 +40,7 @@
       <button class="story-tools__btn story-tools__btn--top" id="backToTop" type="button" aria-label="回到顶部">↑ 回到顶部</button>
     </div>
 
-    <div class="story-audio" id="storyAudio" hidden>
+    <div class="story-audio" id="storyAudio" data-audio="{{ printf "audio/%s.mp3" .Params.slug | relURL }}" hidden>
       <div class="story-audio__inner">
         <span class="story-audio__label" aria-hidden="true">🔊</span>
         <button class="story-tools__btn" id="audioToggle" type="button">▶ 朗读</button>
@@ -51,11 +51,19 @@
         <label class="story-audio__field">语速
           <select id="audioRate" class="story-audio__select" aria-label="选择朗读语速">
             <option value="0.75">慢</option>
+            <option value="0.9">舒缓</option>
             <option value="1" selected>正常</option>
-            <option value="1.25">稍快</option>
+            <option value="1.15">稍快</option>
           </select>
         </label>
-        <span class="story-audio__hint">浏览器语音朗读 · 默认女声</span>
+        <label class="story-audio__field">音调
+          <select id="audioPitch" class="story-audio__select" aria-label="选择朗读音调">
+            <option value="0.85">温柔</option>
+            <option value="1" selected>正常</option>
+            <option value="1.15">清脆</option>
+          </select>
+        </label>
+        <span class="story-audio__hint">自动优选柔美女声 · 系统语音兜底</span>
       </div>
     </div>
 
