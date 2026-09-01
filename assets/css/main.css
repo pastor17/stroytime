@@ -202,7 +202,7 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 .term-pill span { background: var(--primary-soft); color: var(--primary-dark); border-radius: 999px; padding: 0 8px; font-size: 0.78rem; }
 
 /* ---------- 故事详情 ---------- */
-.story { padding: 24px 0 56px; }
+.story { padding: 24px 0 120px; }
 .story-header { max-width: var(--reading-width); margin: 0 auto 28px; text-align: center; }
 .story-header__emoji { font-size: 58px; line-height: 1; margin-bottom: 14px; }
 .story-header__badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
@@ -227,13 +227,22 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 .story-tools__btn:hover { border-color: var(--primary); color: var(--primary-dark); background: var(--primary-soft); }
 .story-tools__btn--top { margin-left: auto; }
 
-/* 朗读工具 */
-.story-audio { max-width: var(--reading-width); margin: 0 auto 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+/* 朗读工具（固定底部悬浮播放器） */
+.story-audio { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: rgba(255,255,255,0.96); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-top: 1px solid var(--line); box-shadow: 0 -4px 18px rgba(60,50,30,0.10); padding: 10px 16px; }
+.story-audio[hidden] { display: none; }
+.story-audio__inner { max-width: var(--content-width); margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
 .story-audio__label { font-size: 1.15rem; line-height: 1; }
 .story-audio__field { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; }
 .story-audio__select { border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; font-size: 0.85rem; color: var(--ink-soft); background: var(--surface); max-width: 230px; }
 .story-audio__hint { color: var(--muted); font-size: 0.78rem; }
 .story-audio .story-tools__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 章节朗读按钮 */
+.chapter-read { margin-left: 10px; font-size: 0.62rem; font-weight: 400; vertical-align: middle; background: var(--primary-soft); color: var(--primary-dark); border: 1px solid var(--primary); border-radius: 999px; padding: 2px 10px; cursor: pointer; line-height: 1.5; }
+.chapter-read:hover { background: var(--primary); color: #fff; }
+
+/* 正在朗读的段落高亮 */
+.story-content .is-reading { background: rgba(233,119,63,0.07); box-shadow: inset 4px 0 0 var(--primary); border-radius: 0 6px 6px 0; transition: background 0.2s; }
 
 /* 正文 */
 .story-content {

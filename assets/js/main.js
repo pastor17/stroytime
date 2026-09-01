@@ -57,17 +57,22 @@
     });
   }
 
-  /* 朗读功能（Web Speech API：浏览器内置语音合成，免费、无需外部库） */
+  /* 朗读功能（Web Speech API：固定悬浮播放器 + 章节起点 + 高亮当前段落） */
+  var audioBar = document.getElementById("storyAudio");
   var audioToggle = document.getElementById("audioToggle");
   var audioStop = document.getElementById("audioStop");
   var audioVoice = document.getElementById("audioVoice");
   var audioRate = document.getElementById("audioRate");
 
-  if (storyBody && audioToggle && audioStop && "speechSynthesis" in window) {
+  if (storyBody && audioBar && audioToggle && audioStop && "speechSynthesis" in window) {
     var synth = window.speechSynthesis;
     var voices = [];
+    var blocks = [];
+    var currentBlock = -1;
     var speaking = false;
     var paused = false;
+
+    audioBar.hidden = false;
 
     var buildVoiceList = function () {
       voices = (synth.getVoices() || []).filter(function (v) {
@@ -104,15 +109,96 @@
     var currentRate = function () {
       return audioRate ? parseFloat(audioRate.value) : 1;
     };
+
+    // 收集正文块（章节标题、段落、列表项、引用）
+    var collectBlocks = function () {
+      blocks = [];
+      storyBody.querySelectorAll("h2, h3, p, li, blockquote").forEach(function (el) {
+        var t = el.innerText.replace(/\s+/g, " ").trim();
+        if (t) blocks.push({ el: el, text: t });
+      });
+    };
+    collectBlocks();
+
+    // 给每个章节标题加「朗读本章」按钮
+    storyBody.querySelectorAll("h2").forEach(function (h2) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "chapter-read";
+      btn.textContent = "🔊 朗读本章";
+      btn.title = "从这一章开始朗读";
+      h2.appendChild(btn);
+    });
+
+    var clearHighlight = function () {
+      blocks.forEach(function (b) { b.el.classList.remove("is-reading"); });
+    };
+
     var resetUI = function () {
       speaking = false;
       paused = false;
+      currentBlock = -1;
+      clearHighlight();
       audioToggle.textContent = "▶ 朗读";
       audioStop.disabled = true;
     };
+
     var stopSpeaking = function () {
       synth.cancel();
       resetUI();
+    };
+
+    var splitSentences = function (text) {
+      return (text.match(/[^。！？!?；;]+[。！？!?；;]?/g) || [text])
+        .map(function (s) { return s.trim(); })
+        .filter(function (s) { return s.length > 0; });
+    };
+
+    var scrollIntoViewIfNeeded = function (el) {
+      var rect = el.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (rect.top < 0 || rect.bottom > vh) {
+        try { el.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+      }
+    };
+
+    var speakBlock = function (index) {
+      if (!speaking || index >= blocks.length) {
+        resetUI();
+        return;
+      }
+      currentBlock = index;
+      var block = blocks[index];
+      clearHighlight();
+      block.el.classList.add("is-reading");
+      scrollIntoViewIfNeeded(block.el);
+
+      var sentences = splitSentences(block.text);
+      var si = 0;
+      var nextSentence = function () {
+        if (!speaking) return;
+        if (si >= sentences.length) {
+          speakBlock(index + 1);
+          return;
+        }
+        var u = new SpeechSynthesisUtterance(sentences[si]);
+        var voice = currentVoice();
+        u.lang = voice ? voice.lang : "zh-CN";
+        if (voice) u.voice = voice;
+        u.rate = currentRate();
+        u.onend = function () { si++; nextSentence(); };
+        synth.speak(u);
+      };
+      nextSentence();
+    };
+
+    var startFrom = function (index) {
+      stopSpeaking();
+      speaking = true;
+      paused = false;
+      audioToggle.textContent = "⏸ 暂停";
+      audioStop.disabled = false;
+      speakBlock(index);
     };
 
     var toggleSpeak = function () {
@@ -128,33 +214,20 @@
         }
         return;
       }
-
-      var text = storyBody.innerText.replace(/\s+/g, " ").trim();
-      if (!text) return;
-
-      // 按句子切分，避免单次朗读过长
-      var sentences = (text.match(/[^。！？!?；;，,：:\n]+[。！？!?；;]?/g) || [text])
-        .map(function (s) { return s.trim(); })
-        .filter(function (s) { return s.length > 0; });
-      if (sentences.length === 0) return;
-
-      var voice = currentVoice();
-      sentences.forEach(function (sentence, idx) {
-        var u = new SpeechSynthesisUtterance(sentence);
-        u.lang = voice ? voice.lang : "zh-CN";
-        if (voice) u.voice = voice;
-        u.rate = currentRate();
-        if (idx === sentences.length - 1) {
-          u.onend = function () { resetUI(); };
-        }
-        synth.speak(u);
-      });
-
-      speaking = true;
-      paused = false;
-      audioToggle.textContent = "⏸ 暂停";
-      audioStop.disabled = false;
+      startFrom(0);
     };
+
+    // 「朗读本章」按钮：从对应章节开始
+    storyBody.querySelectorAll(".chapter-read").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var h2 = btn.closest("h2");
+        var idx = -1;
+        for (var i = 0; i < blocks.length; i++) {
+          if (blocks[i].el === h2) { idx = i; break; }
+        }
+        if (idx >= 0) startFrom(idx);
+      });
+    });
 
     // 部分 Chrome 长时间朗读会中断，定时 resume 保持活跃
     setInterval(function () {
@@ -167,16 +240,13 @@
     audioStop.addEventListener("click", stopSpeaking);
     if (audioVoice) {
       audioVoice.addEventListener("change", function () {
-        if (speaking) { stopSpeaking(); toggleSpeak(); }
+        if (speaking) startFrom(currentBlock >= 0 ? currentBlock : 0);
       });
     }
     if (audioRate) {
       audioRate.addEventListener("change", function () {
-        if (speaking) { stopSpeaking(); toggleSpeak(); }
+        if (speaking) startFrom(currentBlock >= 0 ? currentBlock : 0);
       });
     }
-  } else if (storyBody && audioToggle) {
-    audioToggle.disabled = true;
-    audioToggle.textContent = "当前浏览器不支持朗读";
   }
 })();
