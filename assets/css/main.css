@@ -227,6 +227,14 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 .story-tools__btn:hover { border-color: var(--primary); color: var(--primary-dark); background: var(--primary-soft); }
 .story-tools__btn--top { margin-left: auto; }
 
+/* 朗读工具 */
+.story-audio { max-width: var(--reading-width); margin: 0 auto 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+.story-audio__label { font-size: 1.15rem; line-height: 1; }
+.story-audio__field { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.85rem; }
+.story-audio__select { border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; font-size: 0.85rem; color: var(--ink-soft); background: var(--surface); max-width: 230px; }
+.story-audio__hint { color: var(--muted); font-size: 0.78rem; }
+.story-audio .story-tools__btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* 正文 */
 .story-content {
   max-width: var(--reading-width); margin: 0 auto;
