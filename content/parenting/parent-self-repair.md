@@ -12,6 +12,7 @@ keyPoints:
   - "哪些「假道歉」反而更伤人"
   - "四步修复的具体做法与话术"
 tags: ["家长情绪", "亲子修复", "道歉"]
+cover: "img/parenting/parent-self.jpg"
 author: "童心灯塔编辑部"
 ---
 

@@ -12,6 +12,7 @@ keyPoints:
   - "家长最容易做错的三件事"
   - "陪孩子度过适应期的具体做法"
 tags: ["小升初", "适应期", "入学准备"]
+cover: "img/parenting/school-ready.jpg"
 author: "童心灯塔编辑部"
 ---
 

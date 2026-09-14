@@ -12,6 +12,7 @@ keyPoints:
   - "六项家庭就能练的关键能力"
   - "哪些「提前准备」反而有害"
 tags: ["幼小衔接", "入学准备", "能力培养"]
+cover: "img/parenting/school-ready.jpg"
 author: "童心灯塔编辑部"
 ---
 

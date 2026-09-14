@@ -35,6 +35,13 @@ description: "本站使用的图片均来自可自由使用的开放图库，此
   - 许可：CC BY 4.0
   - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A_single_mother_reading_a_book_to_her_two_children_(P055043-925678).jpg)
 
+### 入学准备
+
+- **《哥哥牵着弟弟的手放学回家》**
+  - 作者：Julia Maudlin（Lake Oswego, Oregon, USA）
+  - 许可：CC BY 2.0
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Big_brother_holding_little_brother%27s_hand_walking_home_from_school,_Shiraz,_Iran_(15515926721).jpg)
+
 ### 家长自我关怀
 
 - **《窗边持杯看雨的女性》**

@@ -12,6 +12,7 @@ keyPoints:
   - "送园时哪些做法会加重焦虑"
   - "五个可以立刻执行的步骤和话术"
 tags: ["入园", "分离焦虑", "入学准备"]
+cover: "img/parenting/school-ready.jpg"
 author: "童心灯塔编辑部"
 ---
 

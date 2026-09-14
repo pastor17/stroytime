@@ -12,6 +12,7 @@ keyPoints:
   - "开学前要跟孩子聊些什么"
   - "开学第一周的节奏怎么安排"
 tags: ["开学", "作息调整", "入学准备"]
+cover: "img/parenting/school-ready.jpg"
 author: "童心灯塔编辑部"
 ---
 
