@@ -12,6 +12,10 @@ keyPoints:
   - "哪些属于「立刻处理」"
   - "多久复查一次"
 tags: ["安全检查表", "居家安全", "工具"]
+cover: "img/parenting/toolbox.jpg"
+relatedGuides:
+  - "safety-home-alone"
+  - "tool-chore-list"
 author: "童心灯塔编辑部"
 ---
 
