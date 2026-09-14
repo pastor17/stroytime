@@ -1,26 +1,80 @@
 {{ define "main" }}
 {{- $stories := where site.RegularPages "Section" "stories" -}}
+{{- $guides := where site.RegularPages "Section" "parenting" -}}
+{{- $topics := hugo.Data.parenting -}}
 
 <section class="hero">
   <div class="container hero__inner">
-    <p class="hero__eyebrow">🌱 面向 4–14 岁孩子的原创故事资源站</p>
-    <h1 class="hero__title">用故事，<span>照亮成长每一步</span></h1>
+    <p class="hero__eyebrow">🌱 面向 4–14 岁孩子与家长的家庭成长站</p>
+    <h1 class="hero__title">故事滋养童年，<span>方法陪伴父母</span></h1>
     <p class="hero__desc">{{ site.Params.description }}</p>
     <div class="hero__actions">
-      <a class="btn btn--primary" href="{{ "stories/" | relURL }}">📚 开始阅读</a>
-      <a class="btn btn--ghost" href="{{ "ages/" | relURL }}">按年龄段选故事</a>
+      <a class="btn btn--primary" href="{{ "stories/" | relURL }}">📚 读故事</a>
+      <a class="btn btn--ghost" href="{{ "parenting/" | relURL }}">🧭 学方法</a>
     </div>
     <div class="hero__stats">
-      <div class="stat"><strong>{{ len $stories }}</strong><span>篇故事</span></div>
+      <div class="stat"><strong>{{ len $stories }}</strong><span>篇原创故事</span></div>
+      <div class="stat"><strong>{{ len $guides }}</strong><span>篇育儿指南</span></div>
       <div class="stat"><strong>{{ len hugo.Data.ages }}</strong><span>个年龄段</span></div>
-      <div class="stat"><strong>{{ len hugo.Data.categories }}</strong><span>个主题分类</span></div>
-      <div class="stat"><strong>8000+</strong><span>字 / 篇</span></div>
+      <div class="stat"><strong>{{ len hugo.Data.categories }}</strong><span>个故事主题</span></div>
     </div>
   </div>
 </section>
 
-{{- with $stories.ByDate.Reverse -}}
 <section class="section">
+  <div class="container">
+    <div class="pillar-grid">
+      <a class="pillar" href="{{ "stories/" | relURL }}">
+        <span class="pillar__emoji" aria-hidden="true">📚</span>
+        <h2 class="pillar__title">故事库</h2>
+        <p class="pillar__desc">{{ len $stories }} 篇 6000–10000 字原创分级故事，覆盖 {{ len hugo.Data.categories }} 个主题、4 个年龄段；可分章朗读、边听边读，每篇附「读后想一想」。</p>
+        <span class="pillar__cta">进入故事库 →</span>
+      </a>
+      <a class="pillar pillar--parenting" href="{{ "parenting/" | relURL }}">
+        <span class="pillar__emoji" aria-hidden="true">🧭</span>
+        <h2 class="pillar__title">亲子学堂</h2>
+        <p class="pillar__desc">{{ len $guides }} 篇可落地的育儿实操指南：习惯养成、情绪与专注力、亲子沟通、入学准备、家庭素养——给场景、给步骤、给话术，不讲空道理。</p>
+        <span class="pillar__cta">进入亲子学堂 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">🧭 育儿实操 · 五大栏目</h2>
+      <a class="section__more" href="{{ "parenting/" | relURL }}">全部栏目 →</a>
+    </div>
+    <p class="section__note">不碰学科提分与应试技巧，只做家庭真正能改变的那部分：习惯、情绪、沟通、适应与素养。</p>
+    <div class="topic-grid">
+      {{- range $topics -}}
+        {{- $count := len (where $guides "Params.topics" "intersect" (slice .slug)) -}}
+        {{ partial "topic-card.html" (dict "topic" . "count" $count) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+
+{{- with $guides.ByDate.Reverse -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">最新育儿指南</h2>
+      <a class="section__more" href="{{ "parenting/" | relURL }}">查看全部 →</a>
+    </div>
+    <div class="guide-grid">
+      {{- range first 3 . -}}
+        {{- $t := index (where $topics "slug" (index .Params.topics 0)) 0 -}}
+        {{ partial "guide-card.html" (dict "page" . "topic" $t) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- with $stories.ByDate.Reverse -}}
+<section class="section section--alt">
   <div class="container">
     <div class="section__head">
       <h2 class="section__title">最新故事</h2>
@@ -35,7 +89,7 @@
 </section>
 {{- end -}}
 
-<section class="section section--alt">
+<section class="section">
   <div class="container">
     <div class="section__head">
       <h2 class="section__title">按年龄段阅读</h2>
@@ -43,14 +97,16 @@
     </div>
     <div class="age-grid">
       {{- range hugo.Data.ages -}}
-        {{- $count := len (where $stories "Params.ages" "intersect" (slice .slug)) -}}
-        {{ partial "age-card.html" (dict "age" . "count" $count) }}
+        {{- $a := . -}}
+        {{- $count := len (where $stories "Params.ages" "intersect" (slice $a.slug)) -}}
+        {{- $gCount := len (where $guides "Params.ageRange" $a.slug) -}}
+        {{ partial "age-card.html" (dict "age" $a "count" $count "guideCount" $gCount) }}
       {{- end -}}
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section section--alt">
   <div class="container">
     <div class="section__head">
       <h2 class="section__title">按主题分类</h2>
@@ -65,13 +121,13 @@
   </div>
 </section>
 
-<section class="section section--alt">
+<section class="section">
   <div class="container">
-    <h2 class="section__title">如何陪孩子读这些故事</h2>
+    <h2 class="section__title">怎么配合着用</h2>
     <div class="reading-guide">
-      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🪑</span><h3>亲子共读</h3><p>4–6 岁建议家长逐句朗读、边读边聊；7 岁后逐步过渡到自主阅读。</p></div>
-      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">💬</span><h3>读后讨论</h3><p>每篇文末附「读后想一想」，引导孩子复述情节、说出感受与想法。</p></div>
-      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🔄</span><h3>反复重读</h3><p>好故事值得读很多遍，每一次都会读出新的理解与共鸣。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🧭</span><h3>家长先看方法</h3><p>在「亲子学堂」按场景找到对应指南，先想清楚这次该怎么说、怎么做。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">📚</span><h3>再用故事落地</h3><p>每篇指南都配了同主题的故事——把道理藏进情节，孩子更容易听进去。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">💬</span><h3>读完聊一聊</h3><p>用故事结尾的「读后想一想」开场，比直接问「你今天怎么样」有效得多。</p></div>
     </div>
   </div>
 </section>

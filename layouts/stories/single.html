@@ -106,4 +106,31 @@
   </div>
 </section>
 {{- end -}}
+
+{{- /* 家长专区：按本篇故事主题，推荐对应的育儿实操指南 */ -}}
+{{- $guides := where site.RegularPages "Section" "parenting" -}}
+{{- $matched := slice -}}
+{{- range hugo.Data.parenting -}}
+  {{- $topic := . -}}
+  {{- if intersect $topic.storyCategories $.Params.categories -}}
+    {{- $matched = $matched | append $topic -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $matched) 0 -}}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">🧭 家长专区 · 这个故事背后的方法</h2>
+      <a class="section__more" href="{{ "parenting/" | relURL }}">去亲子学堂 →</a>
+    </div>
+    <p class="section__note">故事讲给孩子听，方法留给家长用——同一件事，换个说法往往就通了。</p>
+    <div class="topic-grid">
+      {{- range $matched -}}
+        {{- $count := len (where $guides "Params.topics" "intersect" (slice .slug)) -}}
+        {{ partial "topic-card.html" (dict "topic" . "count" $count) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
 {{ end }}

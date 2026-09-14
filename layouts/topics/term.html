@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{- $topicSlug := .Data.Term -}}
+{{- $topic := index (where hugo.Data.parenting "slug" $topicSlug) 0 -}}
+{{- $color := "#e9773f" -}}{{- with $topic.color }}{{ $color = . }}{{ end -}}
+{{- $emoji := "🧭" -}}{{- with $topic.emoji }}{{ $emoji = . }}{{ end -}}
+{{- $guides := .Pages.ByDate.Reverse -}}
+
+<section class="hero hero--topic" style="--topic-color: {{ $color }}">
+  <div class="container hero__inner">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="{{ site.Home.RelPermalink }}">首页</a><span>/</span>
+      <a href="{{ "parenting/" | relURL }}">亲子学堂</a><span>/</span>
+      <span>{{ $topic.name | default .Title }}</span>
+    </nav>
+    <p class="hero__eyebrow">{{ $emoji }} {{ $topic.tagline }}</p>
+    <h1 class="hero__title">{{ $topic.name | default .Title }}</h1>
+    <p class="hero__desc">{{ $topic.description | default .Data.Term }}</p>
+    {{- with $topic.painPoints -}}
+    <ul class="topic-pains">
+      {{- range . -}}<li>{{ . }}</li>{{ end -}}
+    </ul>
+    {{- end -}}
+    <div class="hero__stats">
+      <div class="stat"><strong>{{ len $guides }}</strong><span>篇指南</span></div>
+      <div class="stat"><strong>{{ len $topic.ages | default hugo.Data.ages }}</strong><span>个年龄段</span></div>
+    </div>
+  </div>
+</section>
+
+{{- if gt (len $guides) 0 -}}
+  {{- range hugo.Data.ages -}}
+    {{- $a := . -}}
+    {{- $inAge := where $guides "Params.ageRange" $a.slug -}}
+    {{- if gt (len $inAge) 0 -}}
+    <section class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title">{{ $a.emoji }} {{ $a.name }}·{{ $a.range }}</h2>
+          <span class="section__note">{{ len $inAge }} 篇</span>
+        </div>
+        <div class="guide-grid">
+          {{- range $inAge -}}{{ partial "guide-card.html" (dict "page" . "topic" $topic) }}{{- end -}}
+        </div>
+      </div>
+    </section>
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+<section class="section">
+  <div class="container">
+    <p class="empty-note">这个栏目的指南正在陆续上线，先去看看同主题的故事吧。</p>
+    <div class="guide-grid"></div>
+  </div>
+</section>
+{{- end -}}
+
+{{- $cats := $topic.storyCategories | default slice -}}
+{{- $stories := first 6 (where (where site.RegularPages "Section" "stories") "Params.categories" "intersect" $cats) -}}
+{{- if gt (len $stories) 0 -}}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">配套故事</h2>
+      <a class="section__more" href="{{ "stories/" | relURL }}">去故事库 →</a>
+    </div>
+    <div class="card-grid">
+      {{- range $stories -}}{{ partial "story-card.html" . }}{{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">其他栏目</h2>
+    </div>
+    <div class="topic-grid topic-grid--compact">
+      {{- range where hugo.Data.parenting "slug" "ne" $topicSlug -}}
+        {{ partial "topic-card.html" (dict "topic" . "count" (len (where (where site.RegularPages "Section" "parenting") "Params.topics" "intersect" (slice .slug)))) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{ end }}

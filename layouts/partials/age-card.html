@@ -1,13 +1,14 @@
-{{- /* 年龄段卡片。用法：{{ partial "age-card.html" (dict "age" . "count" $count) }} */ -}}
+{{- /* 年龄段卡片。用法：{{ partial "age-card.html" (dict "age" . "count" $count "guideCount" $n) }} */ -}}
 {{- $age := .age -}}
 {{- $count := .count -}}
+{{- $guideCount := .guideCount | default 0 -}}
 {{- with site.GetPage (printf "/ages/%s" $age.slug) -}}
 <a class="age-card" href="{{ .RelPermalink }}" style="--age-color: {{ $age.color }}">
   <span class="age-card__emoji" aria-hidden="true">{{ $age.emoji }}</span>
   <h3 class="age-card__name">{{ $age.name }}</h3>
   <p class="age-card__range">{{ $age.range }}</p>
   <p class="age-card__desc">{{ $age.description }}</p>
-  <span class="age-card__count">{{ $count }} 篇故事</span>
+  <span class="age-card__count">{{ $count }} 篇故事{{ if gt $guideCount 0 }} · {{ $guideCount }} 篇指南{{ end }}</span>
 </a>
 {{- else -}}
 <div class="age-card age-card--soon" style="--age-color: {{ $age.color }}">

@@ -7,6 +7,13 @@
         <p class="site-footer__contact">📮 联系邮箱：<a href="mailto:irudder@126.com">irudder@126.com</a></p>
       </div>
       <div class="site-footer__col">
+        <h3>亲子学堂</h3>
+        <a href="{{ "parenting/" | relURL }}">🧭 全部育儿指南</a>
+        {{ range hugo.Data.parenting }}
+          <a href="{{ printf "topics/%s/" .slug | relURL }}">{{ .emoji }} {{ .name }}</a>
+        {{ end }}
+      </div>
+      <div class="site-footer__col">
         <h3>年龄段</h3>
         {{ range hugo.Data.ages }}
           {{ $age := . }}
@@ -29,6 +36,6 @@
         {{ end }}
       </div>
     </div>
-    <p class="site-footer__copyright">{{ site.Params.copyright }}</p>
+    <p class="site-footer__copyright">{{ site.Params.copyright }} · <a href="{{ "image-credits/" | relURL }}">图片来源与许可</a></p>
   </div>
 </footer>

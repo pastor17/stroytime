@@ -1,0 +1,15 @@
+{{- /* 栏目卡片。上下文：dict "topic" 栏目元数据 "count" 篇数 */ -}}
+{{- $t := .topic -}}
+{{- $count := .count | default 0 -}}
+<a class="topic-card" href="{{ printf "topics/%s/" $t.slug | relURL }}" style="--topic-color: {{ $t.color }}">
+  <span class="topic-card__emoji" aria-hidden="true">{{ $t.emoji }}</span>
+  <h3 class="topic-card__name">{{ $t.name }}</h3>
+  <p class="topic-card__tagline">{{ $t.tagline }}</p>
+  <p class="topic-card__desc">{{ $t.description }}</p>
+  {{- with $t.painPoints -}}
+    <ul class="topic-card__pains">
+      {{- range first 3 . -}}<li>{{ . }}</li>{{ end -}}
+    </ul>
+  {{- end -}}
+  <span class="topic-card__count">{{ $count }} 篇指南 →</span>
+</a>

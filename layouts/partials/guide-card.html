@@ -1,0 +1,26 @@
+{{- /* 育儿指南卡片。上下文：dict "page" 页面 "topic" 栏目元数据 */ -}}
+{{- $page := .page -}}
+{{- $topic := .topic -}}
+{{- $color := $topic.color | default "#e9773f" -}}
+{{- $emoji := $topic.emoji | default "🧭" -}}
+<article class="guide-card" style="--guide-color: {{ $color }}">
+  <a class="guide-card__cover" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">
+    {{- partial "cover.html" (dict "page" $page "color" $color "emoji" $emoji) -}}
+  </a>
+  <div class="guide-card__body">
+    <div class="guide-card__meta">
+      <span class="guide-card__topic">{{ $emoji }} {{ $topic.name }}</span>
+      {{- with $page.Params.ageRange -}}<span class="guide-card__age">{{ . }}</span>{{ end -}}
+    </div>
+    <h3 class="guide-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+    {{- with $page.Params.summary -}}
+      <p class="guide-card__summary">{{ . | plainify | truncate 92 }}</p>
+    {{- else -}}
+      <p class="guide-card__summary">{{ $page.Summary | plainify | truncate 92 }}</p>
+    {{- end -}}
+    <div class="guide-card__foot">
+      {{- with $page.Params.scenario -}}<span class="guide-card__scenario">📍 {{ . }}</span>{{ end -}}
+      <span class="guide-card__time">约 {{ $page.ReadingTime }} 分钟读完</span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,16 @@
+{{- /* 解析封面图地址：支持外链 URL 与 assets/ 下的本地资源（自动压缩为 WebP）。
+     传入：cover 字符串；返回：可直接用于 src 的 URL（解析失败返回空串）。 */ -}}
+{{- $cover := . -}}
+{{- $src := "" -}}
+{{- with $cover -}}
+  {{- if or (hasPrefix . "http://") (hasPrefix . "https://") (hasPrefix . "//") -}}
+    {{- $src = . -}}
+  {{- else -}}
+    {{- with resources.Get . -}}
+      {{- $opt := . -}}
+      {{- if gt .Width 900 -}}{{- $opt = .Resize "900x webp q82" -}}{{- end -}}
+      {{- $src = $opt.RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $src -}}

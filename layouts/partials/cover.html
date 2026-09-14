@@ -1,0 +1,23 @@
+{{- /* 封面组件：优先展示 cover 图片（本地资源或外链 URL），加载失败或缺失时回退到 emoji + 渐变色块。
+     性能约定：容器用 aspect-ratio 占位（无 CLS），图片一律 loading="lazy" + decoding="async"；
+     本地图片经 Hugo 压缩为 WebP，外链失败只隐藏图片本身，不会留下破图。上下文：
+       page  必填，页面对象
+       color 可选，主题色
+       emoji 可选，回退 emoji
+       alt   可选，替代文本
+       ratio 可选，宽高比，默认 "16 / 10"
+*/ -}}
+{{- $page := .page -}}
+{{- $color := .color | default "#e9773f" -}}
+{{- $emoji := .emoji | default "📚" -}}
+{{- $alt := .alt | default $page.Title -}}
+{{- $ratio := .ratio | default "16 / 10" -}}
+{{- $src := partial "cover-src.html" $page.Params.cover -}}
+<span class="cover" style="--cover-color: {{ $color }}; --cover-ratio: {{ $ratio }}">
+  <span class="cover__emoji" aria-hidden="true">{{ $emoji }}</span>
+  {{- if $src -}}
+    <img class="cover__img" src="{{ $src }}" alt="{{ $alt }}" width="640" height="400"
+         loading="lazy" decoding="async" referrerpolicy="no-referrer"
+         onerror="this.style.display='none'">
+  {{- end -}}
+</span>

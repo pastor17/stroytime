@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{- $guides := where site.RegularPages "Section" "parenting" -}}
+{{- $topics := hugo.Data.parenting -}}
+
+<section class="hero hero--parenting">
+  <div class="container hero__inner">
+    <p class="hero__eyebrow">🧭 亲子学堂 · 写给家长的方法库</p>
+    <h1 class="hero__title">不只是故事，<span>还有陪孩子长大的方法</span></h1>
+    <p class="hero__desc">同样的孩子、同样的难题，差别往往只在「家长怎么说、怎么做」。这里把习惯、情绪、沟通、入学四件大事拆成可操作的步骤与话术，每个年龄段的解法都不一样。</p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#topics">🧭 浏览五大栏目</a>
+      <a class="btn btn--ghost" href="{{ "stories/" | relURL }}">📚 去故事库</a>
+    </div>
+    <div class="hero__stats">
+      <div class="stat"><strong>{{ len $guides }}</strong><span>篇育儿指南</span></div>
+      <div class="stat"><strong>{{ len $topics }}</strong><span>个栏目</span></div>
+      <div class="stat"><strong>{{ len hugo.Data.ages }}</strong><span>个年龄段解法</span></div>
+      <div class="stat"><strong>0</strong><span>学科培训内容</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="topics">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">五大栏目</h2>
+      <span class="section__note">不碰学科提分，只做家庭能做的那部分</span>
+    </div>
+    <div class="topic-grid">
+      {{- range $topics -}}
+        {{- $count := len (where $guides "Params.topics" "intersect" (slice .slug)) -}}
+        {{ partial "topic-card.html" (dict "topic" . "count" $count) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">按孩子年龄找方法</h2>
+      <span class="section__note">同一件事，4 岁和 14 岁的解法完全不同</span>
+    </div>
+    <div class="age-grid">
+      {{- range hugo.Data.ages -}}
+        {{- $a := . -}}
+        {{- $n := 0 -}}
+        {{- range $guides -}}
+          {{- if in (.Params.ageRange | default "") $a.slug -}}{{- $n = add $n 1 -}}{{- end -}}
+        {{- end -}}
+        {{- $sCount := len (where (where site.RegularPages "Section" "stories") "Params.ages" "intersect" (slice $a.slug)) -}}
+        {{ partial "age-card.html" (dict "age" $a "count" $sCount "guideCount" $n) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+
+{{- with $guides.ByDate.Reverse -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">最新指南</h2>
+      <span class="section__note">共 {{ len . }} 篇</span>
+    </div>
+    <div class="guide-grid">
+      {{- range first 9 . -}}
+        {{- $t := index (where $topics "slug" (index .Params.topics 0)) 0 -}}
+        {{ partial "guide-card.html" (dict "page" . "topic" $t) }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+<section class="section section--alt">
+  <div class="container">
+    <h2 class="section__title">怎么用这个栏目</h2>
+    <div class="reading-guide">
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🔍</span><h3>先定位场景</h3><p>从「早上叫不起床」「一批评就哭」这类具体场景进入，比读通用理论更快见效。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">🗣️</span><h3>照着话术说</h3><p>每篇都给出可以直接照搬的句子，先照做，再慢慢长成你自己的语气。</p></div>
+      <div class="reading-guide__item"><span class="reading-guide__emoji" aria-hidden="true">📚</span><h3>配一个故事</h3><p>方法讲给孩子听容易变成说教；用一篇同主题的故事，让道理自己走进孩子心里。</p></div>
+    </div>
+  </div>
+</section>
+{{ end }}

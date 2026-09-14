@@ -1,0 +1,132 @@
+{{ define "main" }}
+{{- $topics := hugo.Data.parenting -}}
+{{- $topicSlug := index .Params.topics 0 -}}
+{{- $topic := index (where $topics "slug" $topicSlug) 0 -}}
+{{- $color := "#e9773f" -}}{{- with $topic.color }}{{ $color = . }}{{ end -}}
+
+<article class="guide" style="--guide-color: {{ $color }}">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="面包屑">
+      <a href="{{ site.Home.RelPermalink }}">首页</a><span>/</span>
+      <a href="{{ "parenting/" | relURL }}">亲子学堂</a><span>/</span>
+      <a href="{{ printf "topics/%s/" $topicSlug | relURL }}">{{ $topic.name }}</a><span>/</span>
+      <span>{{ .Title }}</span>
+    </nav>
+
+    <header class="guide-header">
+      <div class="guide-header__badges">
+        <span class="guide-badge guide-badge--topic">{{ $topic.emoji }} {{ $topic.name }}</span>
+        {{- with .Params.ageRange -}}<span class="guide-badge guide-badge--age">👶 {{ . }}</span>{{ end -}}
+      </div>
+      <h1 class="guide-header__title">{{ .Title }}</h1>
+      {{- with .Params.summary -}}<p class="guide-header__summary">{{ . }}</p>{{- end -}}
+      {{- with .Params.scenario -}}
+      <p class="guide-header__scenario">📍 <strong>常见场景：</strong>{{ . }}</p>
+      {{- end -}}
+      <div class="guide-header__meta">
+        <span>✍️ {{ .Params.author | default site.Params.author }}</span>
+        <span>⏱️ 约 {{ .ReadingTime }} 分钟读完</span>
+        {{- with .Lastmod }}<span>🔄 更新于 {{ .Format "2006-01-02" }}</span>{{ end -}}
+      </div>
+    </header>
+
+    {{- $fig := partial "cover-src.html" .Params.cover -}}
+    {{- if $fig -}}
+    <figure class="guide-figure">
+      <img src="{{ $fig }}" alt="{{ .Title }}" width="960" height="540"
+           loading="lazy" decoding="async" referrerpolicy="no-referrer">
+    </figure>
+    {{- end -}}
+
+    {{- with .Params.keyPoints -}}
+    <aside class="guide-keypoints">
+      <h2 class="guide-keypoints__title">🎯 这篇能帮你解决</h2>
+      <ul>
+        {{- range . -}}<li>{{ . }}</li>{{ end -}}
+      </ul>
+    </aside>
+    {{- end -}}
+
+    {{- with .TableOfContents -}}
+    <details class="toc">
+      <summary>📑 本文目录</summary>
+      <div class="toc__body">{{ . }}</div>
+    </details>
+    {{- end -}}
+
+    <div class="story-tools" aria-label="阅读工具">
+      <span class="story-tools__label">字号</span>
+      <button class="story-tools__btn" id="fontDown" type="button" aria-label="减小字号">A−</button>
+      <button class="story-tools__btn" id="fontReset" type="button" aria-label="恢复标准字号">标准</button>
+      <button class="story-tools__btn" id="fontUp" type="button" aria-label="增大字号">A＋</button>
+      <button class="story-tools__btn story-tools__btn--top" id="backToTop" type="button" aria-label="回到顶部">↑ 回到顶部</button>
+    </div>
+
+    <div class="story-content guide-content" id="storyBody">
+      {{ .Content }}
+    </div>
+
+    {{- with .Params.tags -}}
+    <div class="story-tags">
+      {{- range . -}}
+        <a class="tag" href="{{ printf "/tags/%s/" (. | urlize) | relURL }}">#{{ . }}</a>
+      {{- end -}}
+    </div>
+    {{- end -}}
+
+    <nav class="story-pager">
+      {{- with .PrevInSection -}}<a class="story-pager__link" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{- end -}}
+      {{- with .NextInSection -}}<a class="story-pager__link story-pager__link--next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{- end -}}
+    </nav>
+  </div>
+</article>
+
+{{- /* 配一个故事：显式 relatedStories 优先，否则按栏目映射的故事分类自动推荐 */ -}}
+{{- $allStories := where site.RegularPages "Section" "stories" -}}
+{{- $picked := slice -}}
+{{- with .Params.relatedStories -}}
+  {{- range . -}}
+    {{- with site.GetPage (printf "/stories/%s" .) -}}{{- $picked = $picked | append . -}}{{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- $cats := $topic.storyCategories | default slice -}}
+  {{- $pool := where $allStories "Params.categories" "intersect" $cats -}}
+  {{- with $.Params.ageRange -}}
+    {{- $byAge := where $pool "Params.ages" "intersect" (slice $.Params.ageRange) -}}
+    {{- if gt (len $byAge) 0 -}}{{- $pool = $byAge -}}{{- end -}}
+  {{- end -}}
+  {{- $picked = first 3 $pool -}}
+{{- end -}}
+{{- if gt (len $picked) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">配一个故事讲给孩子听</h2>
+      <a class="section__more" href="{{ "stories/" | relURL }}">去故事库 →</a>
+    </div>
+    <p class="section__note">方法讲给孩子听容易变成说教；用故事，道理会自己走进他心里。</p>
+    <div class="card-grid">
+      {{- range $picked -}}{{ partial "story-card.html" . }}{{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- /* 同栏目其他指南 */ -}}
+{{- $siblings := where (where site.RegularPages "Section" "parenting") "Params.topics" "intersect" (slice $topicSlug) -}}
+{{- $siblings = where $siblings "RelPermalink" "ne" .RelPermalink -}}
+{{- $siblings = first 3 $siblings -}}
+{{- if gt (len $siblings) 0 -}}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">「{{ $topic.name }}」更多指南</h2>
+      <a class="section__more" href="{{ printf "topics/%s/" $topicSlug | relURL }}">全部 →</a>
+    </div>
+    <div class="guide-grid">
+      {{- range $siblings -}}{{ partial "guide-card.html" (dict "page" . "topic" $topic) }}{{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+{{ end }}

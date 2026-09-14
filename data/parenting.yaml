@@ -1,0 +1,80 @@
+# =============================================================
+# 亲子学堂 · 栏目元数据
+# slug 需与文章 front matter 中的 topics 值完全一致
+# storyCategories 用于与故事库自动交叉推荐（对应 data/categories.yaml 的 slug）
+# =============================================================
+
+- slug: "habits"
+  name: "习惯养成"
+  emoji: "🪥"
+  color: "#e88a3a"
+  tagline: "把好习惯，变成孩子的第二天性"
+  description: "作息、自理、收纳、时间感——不讲道理，只给能照着做的方法，帮孩子从「要我做」走到「我自己来」。"
+  ages: ["4-6", "7-9", "10-12"]
+  painPoints:
+    - "早上喊十遍还不起床"
+    - "作业拖到十一点还没写完"
+    - "玩具、书包、房间永远一团乱"
+    - "做事三分钟热度，坚持不下来"
+  storyCategories: ["life-habits", "thinking"]
+  cover: "/img/parenting/habits.jpg"
+
+- slug: "emotion-focus"
+  name: "情绪与专注力"
+  emoji: "🧘"
+  color: "#e26d8a"
+  tagline: "先接住情绪，再谈专注"
+  description: "发脾气、怕失败、坐不住、放不下手机——理解孩子大脑的发育节奏，用对方法，孩子的情绪与专注力都能慢慢长出来。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "一批评就哭，一不如意就炸"
+    - "写作业十分钟走神八次"
+    - "输了比赛就崩溃、不肯再试"
+    - "手机平板拿起来就放不下"
+  storyCategories: ["emotion", "science"]
+  cover: "/img/parenting/emotion-focus.jpg"
+
+- slug: "communication"
+  name: "亲子沟通"
+  emoji: "💬"
+  color: "#4a8fd4"
+  tagline: "好好说话，是最省力的教育"
+  description: "怎样听、怎样问、怎样说「不」而不伤感情——提供可以直接照着说的话术，把每天的冲突时刻变成连接时刻。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "问什么都是「还行」「不知道」"
+    - "一说话就顶嘴、摔门"
+    - "想夸孩子，却只会说「你真棒」"
+    - "管也不是，不管也不是"
+  storyCategories: ["social", "values"]
+  cover: "/img/parenting/communication.jpg"
+
+- slug: "school-ready"
+  name: "入学准备"
+  emoji: "🎒"
+  color: "#3f9a8a"
+  tagline: "准备好的是能力和心理，不是提前学"
+  description: "入园、幼小衔接、小升初——不抢跑学科，只帮孩子把生活自理、规则感、心理预期与学习品质准备好。"
+  ages: ["4-6", "7-9", "10-12"]
+  painPoints:
+    - "上幼儿园天天哭，分离焦虑"
+    - "马上上小学，坐不住、不会表达"
+    - "担心跟不上，又不想提前刷题"
+    - "小升初换环境，孩子状态下滑"
+  storyCategories: ["life-habits", "social", "thinking"]
+  cover: "/img/parenting/school-ready.jpg"
+
+- slug: "family-literacy"
+  name: "亲子共读与家庭素养"
+  emoji: "📖"
+  color: "#b0873c"
+  tagline: "把书读进生活里"
+  description: "共读方法、家庭阅读环境、把故事变成对话与活动——让阅读不只是认字，而成为一家人共同的语言与底气。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "孩子只爱看动画，不爱看书"
+    - "共读时不知道聊什么"
+    - "读了很多，好像没留下什么"
+    - "想提升素养，不知从哪下手"
+  storyCategories: ["culture", "imagination", "arts-music", "science", "eco", "money-wisdom", "safety"]
+  cover: "/img/parenting/family-literacy.jpg"
