@@ -35,6 +35,34 @@ description: "本站使用的图片均来自可自由使用的开放图库，此
   - 许可：CC BY 4.0
   - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:A_single_mother_reading_a_book_to_her_two_children_(P055043-925678).jpg)
 
+### 家长自我关怀
+
+- **《窗边持杯看雨的女性》**
+  - 作者：Shixart1985
+  - 许可：CC BY 2.0
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Woman_sits_by_window_holding_cup_while_watching_rain_fall_outside.jpg)
+
+### 同胞与家庭协作
+
+- **《重庆家常菜 · 家庭聚餐》**
+  - 作者：Jason M. C., Han
+  - 许可：CC BY-SA 4.0
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Special_foods_%26_cuisines_in_Chongqing_-_Family_Dinner_2nd.jpg)
+
+### 身体边界与安全
+
+- **《严寒中母亲护住孩子》**
+  - 作者：Schi11
+  - 许可：CC BY-SA 4.0
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Mother_protecting_her_child_from_the_cold_at_-20_degrees_Celsius.jpg)
+
+### 清单与工具箱
+
+- **《笔记本与铅笔》**
+  - 作者：Helloquence
+  - 许可：CC0（公有领域贡献）
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Field_Notes_and_pencil_(Unsplash).jpg)
+
 ## 关于图片替换
 
 站点的封面图支持两种来源，可在文章 front matter 的 `cover` 字段中自由切换：

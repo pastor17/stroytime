@@ -78,3 +78,61 @@
     - "想提升素养，不知从哪下手"
   storyCategories: ["culture", "imagination", "arts-music", "science", "eco", "money-wisdom", "safety"]
   cover: "/img/parenting/family-literacy.jpg"
+
+- slug: "parent-self"
+  name: "家长自我关怀"
+  emoji: "🫶"
+  color: "#c96f8e"
+  tagline: "先照顾好自己，才有力气照顾孩子"
+  description: "父母不是永动机。发火、内疚、焦虑、失落——这些都不是你不够好，而是没人告诉过你该怎么安放。这一栏写给家长自己。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "一点小事就控制不住发火，发完又后悔"
+    - "吼完孩子，他躲着我，我也恨自己"
+    - "半夜刷手机，越刷越焦虑"
+    - "孩子越大越不亲我，心里空落落的"
+  cover: "/img/parenting/parent-self.jpg"
+
+- slug: "family-team"
+  name: "同胞与家庭协作"
+  emoji: "👨‍👩‍👧‍👦"
+  color: "#7a9e4f"
+  tagline: "育儿不是一个人的战场"
+  description: "二胎争宠、老人带娃、爸爸缺席、夫妻分歧——这些矛盾不解决，再多育儿技巧都会在家庭内耗里失效。这一栏处理「一家人怎么配合」。"
+  ages: ["4-6", "7-9", "10-12"]
+  painPoints:
+    - "老二一出生，老大就变了个样"
+    - "和老人带娃理念冲突，说了又伤感情"
+    - "两个孩子一见面就吵，告状告到我崩溃"
+    - "爸爸总说「你说了算」，人却不在场"
+  storyCategories: ["social"]
+  cover: "/img/parenting/family-team.jpg"
+
+- slug: "body-safety"
+  name: "身体边界与安全"
+  emoji: "🛡️"
+  color: "#4f7fa8"
+  tagline: "教会孩子，他的身体只属于他自己"
+  description: "性教育、不当触碰、校园欺凌、网络陌生人——这些话题家长最难开口，也最不能回避。这一栏把难开口的话，拆成能照着说的句子。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "孩子问「我从哪里来」，不知道怎么答"
+    - "想教身体边界，又怕吓到孩子"
+    - "孩子被欺负了，只教「打回去」够吗"
+    - "网络交友、陌生人私信，怎么给孩子立底线"
+  storyCategories: ["safety"]
+  cover: "/img/parenting/body-safety.jpg"
+
+- slug: "toolbox"
+  name: "清单与工具箱"
+  emoji: "🧰"
+  color: "#8a7f6a"
+  tagline: "能保存、能打印、能照着做的工具"
+  description: "不讲道理，直接给工具：分龄能力自查表、家庭公约模板、沟通话术卡、家务清单。存下来照着用，比读十篇文章管用。"
+  ages: ["4-6", "7-9", "10-12"]
+  painPoints:
+    - "知道该培养自理能力，但不知道几岁该会什么"
+    - "家规定了一堆，执行三天就废了"
+    - "想好好说话，一开口又变成吼"
+    - "想让孩子做家务，不知道从哪件开始"
+  cover: "/img/parenting/toolbox.jpg"
