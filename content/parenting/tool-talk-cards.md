@@ -13,6 +13,8 @@ keyPoints:
   - "照念话术时最容易犯的错"
 tags: ["话术卡", "亲子沟通", "工具"]
 cover: "img/parenting/toolbox.jpg"
+relatedGuides:
+  - "pd-curiosity-questions"
 author: "童心灯塔编辑部"
 ---
 

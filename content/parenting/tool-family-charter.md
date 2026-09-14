@@ -13,6 +13,8 @@ keyPoints:
   - "怎么让公约真的执行下去"
 tags: ["模板", "家庭公约", "工具"]
 cover: "img/parenting/toolbox.jpg"
+relatedGuides:
+  - "pd-natural-logical-consequences"
 author: "童心灯塔编辑部"
 ---
 

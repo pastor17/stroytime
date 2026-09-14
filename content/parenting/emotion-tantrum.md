@@ -13,6 +13,9 @@ keyPoints:
   - "事后复盘的正确时机与方法"
 tags: ["情绪管理", "发脾气", "共情"]
 cover: "img/parenting/emotion-focus.jpg"
+relatedGuides:
+  - "pd-positive-timeout"
+  - "pd-kind-and-firm"
 author: "童心灯塔编辑部"
 ---
 

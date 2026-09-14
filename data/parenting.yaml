@@ -136,3 +136,18 @@
     - "想好好说话，一开口又变成吼"
     - "想让孩子做家务，不知道从哪件开始"
   cover: "/img/parenting/toolbox.jpg"
+
+- slug: "positive-discipline"
+  name: "正面管教"
+  emoji: "🤝"
+  color: "#c0674f"
+  tagline: "不打不骂也不妥协的第三条路"
+  description: "源自阿德勒个体心理学的教养方法：既不惩罚也不娇纵，用「和善而坚定」的态面对每一次冲突。这里把它拆成能上手的理念与工具。"
+  ages: ["4-6", "7-9", "10-12", "13-14"]
+  painPoints:
+    - "一管就哭、一放就乱，只有打骂和妥协两条路"
+    - "孩子总捣乱，说了多少遍都没用"
+    - "不许他干的事，他偏要干，天天拉锯"
+    - "冷静角变成了关小黑屋，越用越对抗"
+  storyCategories: ["emotion", "social"]
+  cover: "/img/parenting/positive-discipline.jpg"

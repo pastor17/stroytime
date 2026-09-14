@@ -70,6 +70,13 @@ description: "本站使用的图片均来自可自由使用的开放图库，此
   - 许可：CC0（公有领域贡献）
   - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Field_Notes_and_pencil_(Unsplash).jpg)
 
+### 正面管教
+
+- **《午后室内，亲子相处的连接时刻》**
+  - 作者：Shixart1985
+  - 许可：CC BY 2.0
+  - 来源：[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Moments_of_connection_between_a_parent_and_child_shared_in_a_cozy_indoor_space_during_peaceful_afternoon_hours.jpg)
+
 ## 关于图片替换
 
 站点的封面图支持两种来源，可在文章 front matter 的 `cover` 字段中自由切换：

@@ -112,9 +112,9 @@
 </section>
 {{- end -}}
 
-{{- /* 同栏目其他指南 */ -}}
-{{- $siblings := where (where site.RegularPages "Section" "parenting") "Params.topics" "intersect" (slice $topicSlug) -}}
-{{- $siblings = where $siblings "RelPermalink" "ne" .RelPermalink -}}
+{{- /* 同栏目其他指南 + 跨栏目延伸阅读（front matter 可用 relatedGuides 指定 slug） */ -}}
+{{- $all := where site.RegularPages "Section" "parenting" -}}
+{{- $siblings := where (where $all "Params.topics" "intersect" (slice $topicSlug)) "RelPermalink" "ne" .RelPermalink -}}
 {{- $siblings = first 3 $siblings -}}
 {{- if gt (len $siblings) 0 -}}
 <section class="section section--alt">
@@ -125,6 +125,27 @@
     </div>
     <div class="guide-grid">
       {{- range $siblings -}}{{ partial "guide-card.html" (dict "page" . "topic" $topic) }}{{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- $extra := slice -}}
+{{- range .Params.relatedGuides -}}
+  {{- with site.GetPage (printf "/parenting/%s" .) -}}{{- $extra = $extra | append . -}}{{- end -}}
+{{- end -}}
+{{- if gt (len $extra) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">延伸阅读</h2>
+      <a class="section__more" href="{{ "parenting/" | relURL }}">全部指南 →</a>
+    </div>
+    <div class="guide-grid">
+      {{- range $extra -}}
+        {{- $t := index (where hugo.Data.parenting "slug" (index .Params.topics 0)) 0 -}}
+        {{ partial "guide-card.html" (dict "page" . "topic" $t) }}
+      {{- end -}}
     </div>
   </div>
 </section>

@@ -13,6 +13,9 @@ keyPoints:
   - "规则该定几条、怎么定、怎么执行"
 tags: ["规则", "边界", "亲子沟通"]
 cover: "img/parenting/communication.jpg"
+relatedGuides:
+  - "pd-kind-and-firm"
+  - "pd-limited-choices"
 author: "童心灯塔编辑部"
 ---
 
