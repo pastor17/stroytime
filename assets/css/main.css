@@ -607,6 +607,101 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
   color: #555;
 }
 
+/* ---------- 给爸妈的 5 分钟 ---------- */
+.parent-notes {
+  margin: 1.5rem 0;
+  border: 1px solid #e8e4df;
+  border-radius: 12px;
+  background: #fdfbf7;
+  overflow: hidden;
+}
+.parent-notes summary {
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #555;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.parent-notes summary::before {
+  content: "▶";
+  font-size: .7rem;
+  transition: transform .2s;
+  color: #aaa;
+}
+.parent-notes[open] summary::before {
+  transform: rotate(90deg);
+}
+.parent-notes__body {
+  padding: 0 1.25rem 1rem;
+  font-size: .95rem;
+  color: #555;
+  line-height: 1.8;
+}
+.parent-notes__body p {
+  margin: .5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #e88a3a;
+}
+
+/* ---------- 给爸妈列表页 ---------- */
+.parent-notes-list { max-width: 800px; margin: 0 auto; }
+.pn-item {
+  border: 1px solid #e8e4df;
+  border-radius: 10px;
+  margin: .5rem 0;
+  background: #fff;
+  overflow: hidden;
+}
+.pn-item summary {
+  padding: .75rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  font-size: .95rem;
+  list-style: none;
+}
+.pn-item summary::before {
+  content: "▶";
+  font-size: .6rem;
+  color: #aaa;
+  transition: transform .2s;
+}
+.pn-item[open] summary::before { transform: rotate(90deg); }
+.pn-item__emoji { font-size: 1.3rem; }
+.pn-item__title { flex: 1; }
+.pn-item__cat {
+  font-size: .75rem;
+  padding: .1rem .4rem;
+  border-radius: 999px;
+  background: #f0ece6;
+  color: #888;
+}
+.pn-item__body {
+  padding: 0 1rem 1rem;
+  font-size: .9rem;
+  color: #555;
+  line-height: 1.7;
+}
+.pn-item__body p {
+  margin: .3rem 0;
+  padding-left: .75rem;
+  border-left: 3px solid #e88a3a;
+}
+.pn-item__link {
+  display: inline-block;
+  margin-top: .5rem;
+  font-size: .85rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.pn-item__link:hover { text-decoration: underline; }
+
 /* ---------- 打印 ---------- */
 @media print {
   .site-header, .site-footer, .progress-bar, .story-tools, .story-pager, .toc, .breadcrumb { display: none !important; }

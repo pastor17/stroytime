@@ -71,6 +71,17 @@
       {{ .Content }}
     </div>
 
+    {{- with .Params.parentNotes -}}
+    <details class="parent-notes">
+      <summary>📝 给爸妈的 5 分钟</summary>
+      <div class="parent-notes__body">
+        {{- range . -}}
+        <p>{{ . }}</p>
+        {{- end -}}
+      </div>
+    </details>
+    {{- end -}}
+
     <footer class="story-footer">
       {{- with .Params.tags -}}
       <div class="story-tags">

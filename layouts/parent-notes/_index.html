@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="container page-head">
+  <h1 class="page-title">📝 给爸妈的 5 分钟</h1>
+  <p class="page-subtitle">每篇故事背后，有 3 句话留给家长：核心道理、沟通话术、一个小行动。读 5 分钟，用一辈子。</p>
+</div>
+
+<div class="container">
+  <div class="parent-notes-list">
+    {{- $stories := where site.RegularPages "Section" "stories" -}}
+    {{- $stories = where $stories "Params.parentNotes" "!=" nil -}}
+    {{- range $stories -}}
+    <details class="pn-item">
+      <summary>
+        <span class="pn-item__emoji" aria-hidden="true">{{ .Params.coverEmoji | default "📖" }}</span>
+        <span class="pn-item__title">{{ .Title }}</span>
+        <span class="pn-item__cat">{{ index .Params.categories 0 }}</span>
+      </summary>
+      <div class="pn-item__body">
+        {{- range .Params.parentNotes -}}
+        <p>{{ . }}</p>
+        {{- end -}}
+        <a class="pn-item__link" href="{{ .RelPermalink }}">→ 读完整故事</a>
+      </div>
+    </details>
+    {{- end -}}
+  </div>
+</div>
+{{ end }}
