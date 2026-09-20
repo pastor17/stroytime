@@ -1,0 +1,92 @@
+{{ define "main" }}
+{{- $slug := .File.ContentBaseName -}}
+{{- $meta := index (where hugo.Data.seasons "slug" $slug) 0 -}}
+
+<div class="container season-hero" style="--season-color: {{ $meta.color | default "#e88a3a" }}">
+  <span class="season-hero__emoji" aria-hidden="true">{{ $meta.emoji }}</span>
+  <h1 class="season-hero__title">{{ $meta.name }}</h1>
+  <p class="season-hero__desc">{{ $meta.description }}</p>
+  <span class="season-hero__badge">{{ $meta.season }}季</span>
+</div>
+
+<div class="container">
+  {{- with .Content -}}
+    <div class="prose season-intro">{{ . }}</div>
+  {{- end -}}
+
+  {{- $stories := where site.RegularPages "Section" "stories" -}}
+  {{- $matched := slice -}}
+  {{- range $stories -}}
+    {{- $storyTags := .Params.tags -}}
+    {{- $storyCats := .Params.categories -}}
+    {{- $storySummary := .Params.summary -}}
+    {{- $storyTitle := .Title -}}
+    {{- $hit := false -}}
+    {{- range $meta.keywords -}}
+      {{- if or (in $storyTags .) (in $storyCats .) (findRE . (printf "%s %s" $storySummary $storyTitle)) -}}
+        {{- $hit = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- with $meta.storySlugs -}}
+      {{- if in . $slug -}}
+        {{- $hit = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $hit -}}
+      {{- $matched = $matched | append . -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if $matched -}}
+  <section class="season-section">
+    <h2 class="season-section__title">📚 推荐故事</h2>
+    <div class="card-grid">
+      {{- range $matched -}}
+        {{ partial "story-card.html" . }}
+      {{- end -}}
+    </div>
+  </section>
+  {{- end -}}
+
+  {{- with .Params.activities -}}
+  <section class="season-section">
+    <h2 class="season-section__title">🎨 亲子活动</h2>
+    <div class="activity-list">
+      {{- range . -}}
+      <div class="activity-card">
+        <h3>{{ .title }}</h3>
+        <p>{{ .desc }}</p>
+        <div class="activity-card__meta">
+          {{- with .age }}<span>👶 {{ . }}</span>{{- end -}}
+          {{- with .time }}<span>⏱️ {{ . }}</span>{{- end -}}
+          {{- with .materials }}<span>🧰 {{ . }}</span>{{- end -}}
+        </div>
+        {{- with .steps -}}
+        <ol class="activity-card__steps">
+          {{- range . }}<li>{{ . }}</li>{{- end -}}
+        </ol>
+        {{- end -}}
+      </div>
+      {{- end -}}
+    </div>
+  </section>
+  {{- end -}}
+
+  {{- with .Params.guides -}}
+  <section class="season-section">
+    <h2 class="season-section__title">🧭 给爸妈的话</h2>
+    <div class="guide-list">
+      {{- range . -}}
+        {{- $guidePage := site.GetPage (printf "/parenting/%s" .slug) -}}
+        {{- if $guidePage -}}
+        <a class="guide-card" href="{{ $guidePage.RelPermalink }}">
+          <h3>{{ $guidePage.Title }}</h3>
+          <p>{{ $guidePage.Params.summary | default $guidePage.Summary | plainify | truncate 100 }}</p>
+        </a>
+        {{- end -}}
+      {{- end -}}
+    </div>
+  </section>
+  {{- end -}}
+</div>
+{{ end }}

@@ -1,0 +1,96 @@
+# 节日/季节专题元数据
+- slug: "chinese-new-year"
+  name: "春节 · 过年"
+  emoji: "🧨"
+  color: "#d4574e"
+  season: "冬"
+  description: "团圆、守岁、压岁钱、舞龙舞狮——过年不只是热闹，更是把祝福和传统种进心里。"
+  keywords: ["春节", "过年", "守岁", "压岁钱", "舞龙", "年糕", "团圆"]
+
+- slug: "spring-mid-autumn"
+  name: "中秋 · 赏月"
+  emoji: "🌕"
+  color: "#b0873c"
+  season: "秋"
+  description: "月亮圆了，家人团聚了。从嫦娥到玉兔，从月饼到桂花酒，中秋是中国人最温柔的节日。"
+  keywords: ["中秋", "月亮", "月饼", "团圆", "嫦娥", "玉兔", "桂花"]
+
+- slug: "qixi"
+  name: "七夕 · 乞巧"
+  emoji: "🎋"
+  color: "#e26d8a"
+  season: "夏"
+  description: "不只是情人节——七夕是女孩们拜织女、学手艺的日子。巧思与匠心，是七夕最原本的礼物。"
+  keywords: ["七夕", "乞巧", "织女", "牛郎", "星辰", "巧思"]
+
+- slug: "qingming"
+  name: "清明 · 踏青"
+  emoji: "🪁"
+  color: "#6fae5c"
+  season: "春"
+  description: "祭祖与踏青并行，思念与生机同在。放风筝、插柳、春水初生——清明是中国人最复杂也最温柔的季节。"
+  keywords: ["清明", "踏青", "风筝", "柳树", "春水", "思念"]
+
+- slug: "dragon-boat"
+  name: "端午 · 龙舟"
+  emoji: "🐲"
+  color: "#3f9a8a"
+  season: "夏"
+  description: "赛龙舟、挂艾草、包粽子、佩香囊——端午是中国人最热闹的夏天，也是屈原与家国情怀的故事。"
+  keywords: ["端午", "龙舟", "粽子", "艾草", "屈原", "香囊"]
+
+- slug: "labor-day"
+  name: "五一 · 劳动节"
+  emoji: "🔧"
+  color: "#e88a3a"
+  season: "春"
+  description: "劳动最光荣——从田间到工坊，从厨房到实验室，每一个劳动者都在用双手改变世界。"
+  keywords: ["劳动", "五一", "职业", "工匠", "感恩", "劳动者"]
+
+- slug: "childrens-day"
+  name: "六一 · 儿童节"
+  emoji: "🎈"
+  color: "#4a8fd4"
+  season: "夏"
+  description: "属于孩子的节日——玩耍、想象、表达、被看见。六一不只是礼物，更是'你被爱着'的确认。"
+  keywords: ["六一", "儿童节", "玩具", "想象", "玩耍", "礼物"]
+
+- slug: "back-to-school"
+  name: "开学季"
+  emoji: "🎒"
+  color: "#5e35b1"
+  season: "秋"
+  description: "新书包、新同桌、新规则——开学是紧张也是期待。帮孩子把心安定下来，比赶进度更重要。"
+  keywords: ["开学", "书包", "同桌", "规则", "新学期", "适应"]
+
+- slug: "summer-vacation"
+  name: "暑假 · 亲子时光"
+  emoji: "🌊"
+  color: "#00897b"
+  season: "夏"
+  description: "两个月的长假，是亲子陪伴的黄金期。玩水、观察昆虫、做实验、读名著——让暑假成为孩子记忆里最亮的一段。"
+  keywords: ["暑假", "玩水", "昆虫", "实验", "读书", "旅行"]
+
+- slug: "national-day"
+  name: "国庆 · 看中国"
+  emoji: "🇨🇳"
+  color: "#d4574e"
+  season: "秋"
+  description: "七天长假，带孩子看看真实的中国——博物馆、古镇、山川、美食。历史不在课本里，在脚下。"
+  keywords: ["国庆", "旅行", "博物馆", "古镇", "山川", "美食"]
+
+- slug: "winter-solstice"
+  name: "冬至 · 数九"
+  emoji: "❄️"
+  color: "#4a8fd4"
+  season: "冬"
+  description: "冬至大如年——饺子、汤圆、数九寒天、冰面上玩耍。最长的黑夜之后，春天真的在路上了。"
+  keywords: ["冬至", "饺子", "汤圆", "数九", "冬天", "冰"]
+
+- slug: "spring-festival"
+  name: "立春 · 播种"
+  emoji: "🌱"
+  color: "#6fae5c"
+  season: "春"
+  description: "一年之计在于春——立春是播种的日子，也是给心里种一颗种子的日子。新的开始，永远不嫌晚。"
+  keywords: ["立春", "播种", "春天", "新开始", "种子", "希望"]

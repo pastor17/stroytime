@@ -1,0 +1,21 @@
+{{ define "main" }}
+<div class="container page-head">
+  <h1 class="page-title">🎄 节日与季节专题</h1>
+  <p class="page-subtitle">每个节日，都是一次陪伴孩子的机会。故事 + 活动 + 方法，帮你在节日里种下最好的记忆。</p>
+</div>
+
+<div class="container">
+  <div class="season-grid">
+    {{- range hugo.Data.seasons -}}
+      {{- $slug := .slug -}}
+      {{- $page := site.GetPage (printf "/seasons/%s" $slug) -}}
+      <a class="season-card" href="{{ $page.RelPermalink }}" style="--season-color: {{ .color }}">
+        <span class="season-card__emoji" aria-hidden="true">{{ .emoji }}</span>
+        <h3 class="season-card__name">{{ .name }}</h3>
+        <span class="season-card__season">{{ .season }}</span>
+        <p class="season-card__desc">{{ .description }}</p>
+      </a>
+    {{- end -}}
+  </div>
+</div>
+{{ end }}

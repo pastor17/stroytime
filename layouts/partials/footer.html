@@ -24,6 +24,13 @@
           {{ end }}
         {{ end }}
       </div>
+      <div class="site-footer__col">
+        <h3>节日专题</h3>
+        <a href="{{ "seasons/" | relURL }}">🎄 全部节日专题</a>
+        {{ range first 4 hugo.Data.seasons }}
+          <a href="{{ printf "season/%s/" .slug | relURL }}">{{ .emoji }} {{ .name }}</a>
+        {{ end }}
+      </div>
       <div class="site-footer__col site-footer__col--cats">
         <h3>故事分类</h3>
         {{ range hugo.Data.categories }}
