@@ -19,7 +19,11 @@
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="zh_CN">
+<meta property="twitter:card" content="summary_large_image">
+{{- if .Params.tags -}}
+<meta name="keywords" content="{{ delimit .Params.tags ", " }}">
+{{- end -}}
 {{- $css := resources.Get "css/main.css" -}}
 {{- if not hugo.IsServer }}{{ $css = $css | minify | fingerprint }}{{ end -}}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
@@ -33,3 +37,5 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
+{{- partial "seo-ld.html" . -}}
+

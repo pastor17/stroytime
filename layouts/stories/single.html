@@ -138,6 +138,78 @@
 </section>
 {{- end -}}
 
+{{- /* 配套活动：匹配故事 slug 或 tags */ -}}
+{{- $acts := where site.RegularPages "Section" "activities" -}}
+{{- $actMatched := slice -}}
+{{- range $acts -}}
+  {{- $aTags := .Params.tags | default slice -}}
+  {{- $aStorySlug := .Params.relatedStory -}}
+  {{- $hit := false -}}
+  {{- if $aStorySlug -}}
+    {{- if eq $aStorySlug $.RelPermalink -}}
+      {{- $hit = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if and (not $hit) $aTags -}}
+    {{- if intersect $aTags $.Params.tags -}}
+      {{- $hit = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $hit -}}
+    {{- $actMatched = $actMatched | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $actMatched) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">🎨 读完故事，动手做一做</h2>
+      <a class="section__more" href="{{ "activities/" | relURL }}">全部活动 →</a>
+    </div>
+    <div class="card-grid">
+      {{- range first 2 $actMatched -}}
+      <article class="card">
+        <a class="card__cover" href="{{ .RelPermalink }}" style="--cover-color: {{ .Params.color | default "#3f9a8a" }}">
+          <span class="card__emoji" aria-hidden="true">{{ .Params.emoji | default "🎨" }}</span>
+        </a>
+        <div class="card__body">
+          <h3 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p class="card__summary">{{ .Params.summary | plainify | truncate 80 }}</p>
+        </div>
+      </article>
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- /* 节日推荐：匹配故事 tags 与节日 keywords */ -}}
+{{- $seasonMatched := slice -}}
+{{- range hugo.Data.seasons -}}
+  {{- if intersect .keywords $.Params.tags -}}
+    {{- $seasonMatched = $seasonMatched | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $seasonMatched) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">🎄 相关节日专题</h2>
+    </div>
+    <div class="season-grid">
+      {{- range first 2 $seasonMatched -}}
+      {{- $sPage := site.GetPage (printf "/seasons/%s" .slug) -}}
+      <a class="season-card" href="{{ $sPage.RelPermalink }}" style="--season-color: {{ .color }}">
+        <span class="season-card__emoji" aria-hidden="true">{{ .emoji }}</span>
+        <h3 class="season-card__name">{{ .name }}</h3>
+        <p class="season-card__desc">{{ .description }}</p>
+      </a>
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
 {{- /* 家长专区：按本篇故事主题，推荐对应的育儿实操指南 */ -}}
 {{- $guides := where site.RegularPages "Section" "parenting" -}}
 {{- $matched := slice -}}
