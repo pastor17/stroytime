@@ -82,6 +82,26 @@
     </details>
     {{- end -}}
 
+    {{- with .Params.dialogue -}}
+    <details class="dialogue">
+      <summary>💬 亲子对话</summary>
+      <div class="dialogue__body">
+        <p class="dialogue__scene">{{ .scene }}</p>
+        <div class="dialogue__exchanges">
+          {{- range .lines -}}
+          <div class="dialogue-line dialogue-line--{{ .role }}">
+            <span class="dialogue-line__speaker">{{ .who }}</span>
+            <span class="dialogue-line__text">{{ .text }}</span>
+          </div>
+          {{- end -}}
+        </div>
+        {{- with .extension -}}
+        <p class="dialogue__extension">🎯 延伸：{{ . }}</p>
+        {{- end -}}
+      </div>
+    </details>
+    {{- end -}}
+
     <footer class="story-footer">
       {{- with .Params.tags -}}
       <div class="story-tags">

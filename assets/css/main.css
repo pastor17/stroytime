@@ -702,6 +702,66 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 }
 .pn-item__link:hover { text-decoration: underline; }
 
+/* ---------- 亲子对话 ---------- */
+.dialogue {
+  margin: 1.5rem 0;
+  border: 1px solid #d4e5f7;
+  border-radius: 12px;
+  background: #f5f9ff;
+  overflow: hidden;
+}
+.dialogue summary {
+  padding: 1rem 1.25rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #3366aa;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.dialogue summary::before {
+  content: "▶";
+  font-size: .7rem;
+  transition: transform .2s;
+  color: #8ab;
+}
+.dialogue[open] summary::before { transform: rotate(90deg); }
+.dialogue__body { padding: 0 1.25rem 1rem; }
+.dialogue__scene {
+  font-size: .9rem;
+  color: #666;
+  font-style: italic;
+  margin: 0 0 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px dashed #d4e5f7;
+}
+.dialogue__exchanges { display: flex; flex-direction: column; gap: .5rem; }
+.dialogue-line {
+  display: flex;
+  gap: .5rem;
+  font-size: .95rem;
+  line-height: 1.6;
+}
+.dialogue-line__speaker {
+  flex-shrink: 0;
+  font-weight: 700;
+  min-width: 3rem;
+}
+.dialogue-line--parent .dialogue-line__speaker { color: #3366aa; }
+.dialogue-line--child .dialogue-line__speaker { color: #e88a3a; }
+.dialogue-line--note .dialogue-line__speaker { color: #888; font-style: italic; }
+.dialogue__extension {
+  margin: 1rem 0 0;
+  padding: .75rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  font-size: .9rem;
+  color: #555;
+  border-left: 3px solid #3366aa;
+}
+
 /* ---------- 打印 ---------- */
 @media print {
   .site-header, .site-footer, .progress-bar, .story-tools, .story-pager, .toc, .breadcrumb { display: none !important; }
