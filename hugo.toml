@@ -51,6 +51,7 @@ disableHugoGeneratorInject = true
   stories = '/story/:slug/'
   parenting = '/parenting/:slug/'
   seasons = '/season/:slug/'
+  activities = '/activity/:slug/'
 
 # 分页：全部故事列表每页 12 篇
 [pagination]

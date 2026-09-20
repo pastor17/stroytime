@@ -1,0 +1,57 @@
+{{ define "main" }}
+<div class="container activity-hero" style="--activity-color: {{ .Params.color | default "#3f9a8a" }}">
+  <span class="activity-hero__emoji" aria-hidden="true">{{ .Params.emoji | default "🎨" }}</span>
+  <h1 class="activity-hero__title">{{ .Title }}</h1>
+  <p class="activity-hero__desc">{{ .Params.summary | default .Summary }}</p>
+  <div class="activity-hero__meta">
+    {{- with .Params.age }}<span>👶 {{ . }}</span>{{ end -}}
+    {{- with .Params.time }}<span>⏱️ {{ . }}</span>{{ end -}}
+    {{- with .Params.materials }}<span>🧰 {{ . }}</span>{{ end -}}
+  </div>
+</div>
+
+<div class="container">
+  {{- with .Params.relatedStory -}}
+  <div class="activity-related">
+    📖 配套故事：<a href="{{ . | relURL }}">{{ . }}</a>
+  </div>
+  {{- end -}}
+
+  <div class="prose activity-content">
+    {{ .Content }}
+  </div>
+
+  {{- with .Params.steps -}}
+  <section class="activity-steps-section">
+    <h2>📋 步骤</h2>
+    <ol class="activity-steps">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end -}}
+    </ol>
+  </section>
+  {{- end -}}
+
+  {{- with .Params.tips -}}
+  <section class="activity-tips-section">
+    <h2>💡 小贴士</h2>
+    <ul class="activity-tips">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end -}}
+    </ul>
+  </section>
+  {{- end -}}
+
+  {{- with .Params.talk -}}
+  <section class="activity-talk-section">
+    <h2>💬 聊点什么</h2>
+    <ul class="activity-talk">
+      {{- range . }}
+      <li>{{ . }}</li>
+      {{- end -}}
+    </ul>
+  </section>
+  {{- end -}}
+</div>
+{{ end }}

@@ -1,0 +1,29 @@
+{{ define "main" }}
+<div class="container page-head">
+  <h1 class="page-title">🎨 亲子活动指南</h1>
+  <p class="page-subtitle">读完故事，动手做一做。每个活动 15-60 分钟，材料简单，在家就能做。</p>
+</div>
+
+<div class="container">
+  <div class="card-grid">
+    {{- range .Pages -}}
+    <article class="card activity-index-card">
+      <a class="card__cover" href="{{ .RelPermalink }}" style="--cover-color: {{ .Params.color | default "#3f9a8a" }}">
+        <span class="card__emoji" aria-hidden="true">{{ .Params.emoji | default "🎨" }}</span>
+      </a>
+      <div class="card__body">
+        <div class="card__badges">
+          {{- with .Params.age }}<span class="badge badge--age">{{ . }}</span>{{ end -}}
+          {{- with .Params.time }}<span class="badge badge--time">⏱️ {{ . }}</span>{{ end -}}
+        </div>
+        <h3 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="card__summary">{{ .Params.summary | default .Summary | plainify | truncate 90 }}</p>
+        {{- with .Params.relatedStory -}}
+        <p class="card__moral">📖 配套故事：{{ . }}</p>
+        {{- end -}}
+      </div>
+    </article>
+    {{- end -}}
+  </div>
+</div>
+{{ end }}
