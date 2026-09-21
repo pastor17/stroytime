@@ -1,3 +1,11 @@
 {{- $js := resources.Get "js/main.js" -}}
 {{- if not hugo.IsServer }}{{ $js = $js | minify | fingerprint }}{{ end -}}
 <script src="{{ $js.RelPermalink }}" defer></script>
+{{- $fuse := resources.Get "js/fuse.min.js" -}}
+{{- $searchData := resources.Get "js/search-data.js" -}}
+{{- if not hugo.IsServer -}}
+{{- $fuse = $fuse | minify | fingerprint -}}
+{{- $searchData = $searchData | fingerprint -}}
+{{- end -}}
+<script src="{{ $fuse.RelPermalink }}" defer></script>
+<script src="{{ $searchData.RelPermalink }}" defer></script>

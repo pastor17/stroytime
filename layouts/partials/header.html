@@ -10,6 +10,10 @@
     <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="siteNav">
       <span></span><span></span><span></span>
     </button>
+    <div class="site-search" id="siteSearch" role="search">
+      <input type="search" id="searchInput" placeholder="搜索故事、指南、活动…" aria-label="搜索" autocomplete="off">
+      <div class="site-search__results" id="searchResults" hidden></div>
+    </div>
     <nav class="site-nav" id="siteNav" aria-label="主导航">
       <a href="{{ site.Home.RelPermalink }}">首页</a>
       <a href="{{ "stories/" | relURL }}">故事库</a>

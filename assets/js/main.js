@@ -323,6 +323,94 @@
   }
 })();
 
+/* 全站搜索 */
+(function () {
+  "use strict";
+  var input = document.getElementById("searchInput");
+  var results = document.getElementById("searchResults");
+  if (!input || !results) return;
+
+  var searchIndex = [];
+  var fuse = null;
+
+  function initSearch() {
+    if (typeof window.searchData !== "undefined" && Array.isArray(window.searchData)) {
+      searchIndex = window.searchData;
+      if (typeof Fuse !== "undefined") {
+        fuse = new Fuse(searchIndex, {
+          keys: [
+            { name: "title", weight: 3 },
+            { name: "summary", weight: 2 },
+            { name: "tags", weight: 2 },
+            { name: "snippet", weight: 1 }
+          ],
+          threshold: 0.4,
+          includeMatches: false,
+          minMatchCharLength: 1
+        });
+      }
+    }
+  }
+
+  // Wait for search-index.json to load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSearch);
+  } else {
+    // Try immediately, then retry after a short delay
+    initSearch();
+    setTimeout(initSearch, 500);
+  }
+
+  var typeLabels = { story: "📖 故事", parenting: "🧭 指南", activity: "🎨 活动", season: "🎄 节日" };
+  var debounceTimer = null;
+
+  input.addEventListener("input", function () {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function () {
+      var q = input.value.trim();
+      if (q.length < 1) {
+        results.hidden = true;
+        results.innerHTML = "";
+        return;
+      }
+      var items = fuse ? fuse.search(q).slice(0, 8) : [];
+      if (items.length === 0) {
+        results.innerHTML = '<p class="site-search__empty">没有找到 "' + q + '" 相关内容</p>';
+        results.hidden = false;
+        return;
+      }
+      var html = "";
+      items.forEach(function (r) {
+        var item = r.item;
+        var label = typeLabels[item.type] || item.type;
+        html += '<a class="site-search__item" href="' + item.url + '">';
+        html += '<span class="site-search__type">' + label + '</span>';
+        html += '<span class="site-search__title">' + (item.emoji ? item.emoji + " " : "") + item.title + '</span>';
+        html += '<span class="site-search__summary">' + item.summary + '</span>';
+        html += '</a>';
+      });
+      results.innerHTML = html;
+      results.hidden = false;
+    }, 200);
+  });
+
+  // Close on outside click
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("#siteSearch")) {
+      results.hidden = true;
+    }
+  });
+
+  // Close on Escape
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      results.hidden = true;
+      input.value = "";
+      input.blur();
+    }
+  });
+})();
+
 /* 故事列表页筛选 */
 (function () {
   "use strict";
