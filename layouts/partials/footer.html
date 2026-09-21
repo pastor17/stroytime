@@ -14,7 +14,9 @@
         {{ end }}
       </div>
       <div class="site-footer__col">
-        <h3>年龄段</h3>
+        <h3>快速入口</h3>
+        <a href="{{ "seasons/" | relURL }}">🎄 节日专题</a>
+        <a href="{{ "activities/" | relURL }}">🎨 亲子活动</a>
         {{ range hugo.Data.ages }}
           {{ $age := . }}
           {{ with site.GetPage (printf "/ages/%s" $age.slug) }}
@@ -23,11 +25,6 @@
             <span class="site-footer__soon">{{ $age.emoji }} {{ $age.name }}</span>
           {{ end }}
         {{ end }}
-      </div>
-      <div class="site-footer__col">
-        <h3>节日 & 活动</h3>
-        <a href="{{ "seasons/" | relURL }}">🎄 节日专题</a>
-        <a href="{{ "activities/" | relURL }}">🎨 亲子活动</a>
       </div>
       <div class="site-footer__col site-footer__col--cats">
         <h3>故事分类</h3>
