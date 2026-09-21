@@ -322,3 +322,46 @@
     }
   }
 })();
+
+/* 故事列表页筛选 */
+(function () {
+  "use strict";
+  var bar = document.getElementById("filterBar");
+  var grid = document.getElementById("storyGrid");
+  var empty = document.getElementById("filterEmpty");
+  if (!bar || !grid) return;
+
+  var activeAge = "all";
+  var activeCat = "all";
+  var cards = Array.prototype.slice.call(grid.querySelectorAll(".card"));
+
+  function applyFilter() {
+    var visible = 0;
+    cards.forEach(function (card) {
+      var ages = (card.getAttribute("data-ages") || "").split(",");
+      var cats = (card.getAttribute("data-cats") || "").split(",");
+      var show = true;
+      if (activeAge !== "all" && ages.indexOf(activeAge) === -1) show = false;
+      if (activeCat !== "all" && cats.indexOf(activeCat) === -1) show = false;
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
+    });
+    if (empty) empty.hidden = visible > 0;
+  }
+
+  bar.addEventListener("click", function (e) {
+    var btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    var type = btn.getAttribute("data-type");
+    var val = btn.getAttribute("data-val");
+    // Update active state within group
+    var group = btn.parentElement;
+    group.querySelectorAll(".filter-btn").forEach(function (b) {
+      b.classList.remove("is-active");
+    });
+    btn.classList.add("is-active");
+    if (type === "age") activeAge = val;
+    if (type === "cat") activeCat = val;
+    applyFilter();
+  });
+})();

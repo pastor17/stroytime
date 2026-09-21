@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4574e;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#d4574e;stop-opacity:0.05"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#fff"/>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#d4574e"/>
+  <text x="600" y="260" font-size="120" text-anchor="middle">🏮</text>
+  <text x="600" y="380" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#333" text-anchor="middle">品德与价值观</text>
+  <text x="600" y="450" font-family="system-ui,sans-serif" font-size="28" fill="#888" text-anchor="middle">童心灯塔 · 成长故事馆</text>
+  <text x="600" y="520" font-family="system-ui,sans-serif" font-size="20" fill="#aaa" text-anchor="middle">面向 4-14 岁孩子与家长的家庭成长站</text>
+</svg>

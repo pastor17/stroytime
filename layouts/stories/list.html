@@ -2,16 +2,71 @@
 {{- $stories := where site.RegularPages "Section" "stories" -}}
 <div class="container page-head">
   <h1 class="page-title">全部故事</h1>
-  <p class="page-subtitle">{{ len $stories }} 篇原创故事，按年龄与主题分类，每篇 8000–15000 字，可亲子共读或自主阅读。</p>
+  <p class="page-subtitle">{{ len $stories }} 篇原创故事，按年龄与主题分类，可亲子共读或自主阅读。</p>
 </div>
 <div class="container">
+  <!-- 筛选栏 -->
+  <div class="filter-bar" id="filterBar">
+    <div class="filter-group">
+      <span class="filter-label">年龄</span>
+      <button class="filter-btn is-active" data-type="age" data-val="all">全部</button>
+      {{- range hugo.Data.ages -}}
+      <button class="filter-btn" data-type="age" data-val="{{ .slug }}">{{ .emoji }} {{ .name }}</button>
+      {{- end -}}
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">分类</span>
+      <button class="filter-btn is-active" data-type="cat" data-val="all">全部</button>
+      {{- range hugo.Data.categories -}}
+      <button class="filter-btn" data-type="cat" data-val="{{ .slug }}">{{ .emoji }}</button>
+      {{- end -}}
+    </div>
+  </div>
+
   {{- $paginator := .Paginate ($stories.ByDate.Reverse) -}}
   {{- if gt (len $paginator.Pages) 0 -}}
-  <div class="card-grid">
+  <div class="card-grid" id="storyGrid">
     {{- range $paginator.Pages -}}
-      {{ partial "story-card.html" . }}
+      {{- $ageData := delimit (.Params.ages | default slice) "," -}}
+      {{- $catData := delimit (.Params.categories | default slice) "," -}}
+      <article class="card" data-ages="{{ $ageData }}" data-cats="{{ $catData }}">
+        {{- $catColor := "#e9773f" -}}
+        {{- with index .Params.categories 0 -}}
+          {{- range first 1 (where hugo.Data.categories "slug" .) -}}
+            {{- if .color }}{{ $catColor = .color }}{{ end -}}
+          {{- end -}}
+        {{- end -}}
+        <a class="card__cover" href="{{ .RelPermalink }}" style="--cover-color: {{ $catColor }}" aria-label="{{ .Title }}">
+          <span class="card__emoji" aria-hidden="true">{{ .Params.coverEmoji | default site.Params.defaultCoverEmoji }}</span>
+        </a>
+        <div class="card__body">
+          <div class="card__badges">
+            {{- range .Params.ages -}}
+              {{ partial "badge.html" (dict "taxonomy" "ages" "term" .) }}
+            {{- end -}}
+            {{- range .Params.categories -}}
+              {{ partial "badge.html" (dict "taxonomy" "categories" "term" .) }}
+            {{- end -}}
+          </div>
+          <h3 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          {{- with .Params.summary -}}
+            <p class="card__summary">{{ . | plainify | truncate 96 }}</p>
+          {{- else -}}
+            <p class="card__summary">{{ .Summary | plainify | truncate 96 }}</p>
+          {{- end -}}
+          {{- with .Params.moral -}}
+            <p class="card__moral">💡 {{ . }}</p>
+          {{- end -}}
+          <div class="card__meta">
+            <span>约 {{ .WordCount }} 字</span>
+            <span>·</span>
+            <span>阅读约 {{ .ReadingTime }} 分钟</span>
+          </div>
+        </div>
+      </article>
     {{- end -}}
   </div>
+  <p class="filter-empty" id="filterEmpty" hidden>没有找到匹配的故事，试试其他筛选条件？</p>
   {{ partial "pagination.html" $paginator }}
   {{- else -}}
   <p class="empty">故事正在陆续上线，敬请期待～</p>
