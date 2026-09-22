@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pastor17.github.io/stroytime/sitemap.xml
+Sitemap: https://fairytale.irudder.me/sitemap.xml
