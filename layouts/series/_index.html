@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="container page-head">
+  <h1 class="page-title">📚 故事系列</h1>
+  <p class="page-subtitle">同主题故事串成系列，从春到冬、从情绪到安全，一次读个够。</p>
+</div>
+<div class="container">
+  <div class="series-grid">
+    {{- range hugo.Data.series -}}
+    <a class="series-card" href="{{ printf "/series/%s/" .slug | relURL }}" style="--series-color: {{ .color }}">
+      <span class="series-card__emoji" aria-hidden="true">{{ .emoji }}</span>
+      <h3 class="series-card__name">{{ .name }}</h3>
+      <p class="series-card__desc">{{ .description }}</p>
+      <span class="series-card__count">{{ len .stories }} 篇故事</span>
+    </a>
+    {{- end -}}
+  </div>
+</div>
+{{ end }}

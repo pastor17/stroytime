@@ -77,12 +77,61 @@
 <section class="section section--alt">
   <div class="container">
     <div class="section__head">
-      <h2 class="section__title">最新故事</h2>
+      <h2 class="section__title">📚 最新故事</h2>
       <a class="section__more" href="{{ "stories/" | relURL }}">查看全部 →</a>
     </div>
     <div class="card-grid">
       {{- range first 6 . -}}
         {{ partial "story-card.html" . }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- /* 编辑精选 */ -}}
+{{- $featured := slice -}}
+{{- $featuredSlugs := slice "talking-traffic-light" "rainbow" "angry-balloon" "kitchen-science" "family-meeting" "gratitude-seed" -}}
+{{- range $featuredSlugs -}}
+  {{- $s := site.GetPage (printf "/stories/%s" .) -}}
+  {{- if $s -}}
+    {{- $featured = $featured | append $s -}}
+  {{- end -}}
+{{- end -}}
+{{- if gt (len $featured) 0 -}}
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">⭐ 编辑精选</h2>
+      <a class="section__more" href="{{ "series/" | relURL }}">故事系列 →</a>
+    </div>
+    <p class="section__note">6 篇被反复推荐的故事——安全、情绪、科学、家庭、感恩，每篇都值得一读再读。</p>
+    <div class="card-grid">
+      {{- range $featured -}}
+        {{ partial "story-card.html" . }}
+      {{- end -}}
+    </div>
+  </div>
+</section>
+{{- end -}}
+
+{{- /* 故事系列推荐 */ -}}
+{{- $series := hugo.Data.series -}}
+{{- if gt (len $series) 0 -}}
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">📖 故事系列</h2>
+      <a class="section__more" href="{{ "series/" | relURL }}">全部系列 →</a>
+    </div>
+    <div class="series-grid">
+      {{- range first 3 $series -}}
+      <a class="series-card" href="{{ printf "/series/%s/" .slug | relURL }}" style="--series-color: {{ .color }}">
+        <span class="series-card__emoji" aria-hidden="true">{{ .emoji }}</span>
+        <h3 class="series-card__name">{{ .name }}</h3>
+        <p class="series-card__desc">{{ .description }}</p>
+        <span class="series-card__count">{{ len .stories }} 篇故事</span>
+      </a>
       {{- end -}}
     </div>
   </div>

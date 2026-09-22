@@ -1,0 +1,53 @@
+{{ define "main" }}
+{{- $s := index (where hugo.Data.series "slug" .File.ContentBaseName) 0 -}}
+{{- if $s -}}
+<div class="container">
+  <div class="series-hero" style="--series-color: {{ $s.color }}">
+    <span class="series-hero__emoji" aria-hidden="true">{{ $s.emoji }}</span>
+    <h1 class="series-hero__title">{{ $s.name }}</h1>
+    <p class="series-hero__desc">{{ $s.description }}</p>
+  </div>
+
+  {{- $seriesStories := slice -}}
+  {{- range $s.stories -}}
+    {{- $story := site.GetPage (printf "/stories/%s" .) -}}
+    {{- if $story -}}
+      {{- $seriesStories = $seriesStories | append $story -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if gt (len $seriesStories) 0 -}}
+  <div class="series-stories">
+    {{- range $seriesStories -}}
+    {{- $catColor := "#e9773f" -}}
+    {{- with index .Params.categories 0 -}}
+      {{- range first 1 (where hugo.Data.categories "slug" .) -}}
+        {{- if .color }}{{ $catColor = .color }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+    <article class="card" style="--cover-color: {{ $catColor }}">
+      <a class="card__cover" href="{{ .RelPermalink }}">
+        <span class="card__emoji" aria-hidden="true">{{ .Params.coverEmoji | default "📖" }}</span>
+      </a>
+      <div class="card__body">
+        <div class="card__badges">
+          {{- range .Params.ages -}}
+            {{ partial "badge.html" (dict "taxonomy" "ages" "term" .) }}
+          {{- end -}}
+        </div>
+        <h3 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        {{- with .Params.summary -}}
+        <p class="card__summary">{{ . | plainify | truncate 80 }}</p>
+        {{- end -}}
+      </div>
+    </article>
+    {{- end -}}
+  </div>
+  {{- end -}}
+</div>
+{{- else -}}
+<div class="container">
+  <p>系列不存在。</p>
+</div>
+{{- end -}}
+{{ end }}

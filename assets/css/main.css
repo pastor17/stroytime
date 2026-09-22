@@ -818,6 +818,53 @@ h1, h2, h3, h4 { line-height: 1.3; color: var(--ink); margin: 0 0 0.5em; font-we
 }
 .bedtime-tip p { margin: 0; font-size: .95rem; color: #555; line-height: 1.7; }
 
+/* ---------- 故事系列 ---------- */
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.series-card {
+  display: block;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e8e4df;
+  border-top: 4px solid var(--series-color, #e88a3a);
+  text-decoration: none;
+  transition: transform .15s, box-shadow .15s;
+}
+.series-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+.series-card__emoji { font-size: 2.5rem; display: block; margin-bottom: .5rem; }
+.series-card__name { font-size: 1.1rem; font-weight: 700; margin: 0 0 .35rem; color: #333; }
+.series-card__desc { font-size: .85rem; color: #777; margin: 0 0 .5rem; line-height: 1.5; }
+.series-card__count {
+  font-size: .78rem;
+  color: var(--series-color, #e88a3a);
+  font-weight: 600;
+}
+.series-hero {
+  text-align: center;
+  padding: 2.5rem 1rem 2rem;
+  border-radius: 16px;
+  margin: 1rem 0 2rem;
+  border-top: 6px solid var(--series-color, #e88a3a);
+  background: #f9f7f4;
+}
+.series-hero__emoji { font-size: 3.5rem; display: block; margin-bottom: .5rem; }
+.series-hero__title { font-size: 1.8rem; font-weight: 800; margin: 0 0 .5rem; color: var(--series-color, #e88a3a); }
+.series-hero__desc { font-size: 1rem; color: #666; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+.series-stories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
 /* ---------- 搜索框 ---------- */
 .site-search {
   position: relative;
