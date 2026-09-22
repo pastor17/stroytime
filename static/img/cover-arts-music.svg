@@ -1,15 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e84393;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#e84393;stop-opacity:0.05"/>
+      <stop offset="0%" style="stop-color:#e84393;stop-opacity:0.12"/>
+      <stop offset="50%" style="stop-color:#e84393;stop-opacity:0.06"/>
+      <stop offset="100%" style="stop-color:#e84393;stop-opacity:0.15"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e84393"/>
+      <stop offset="100%" style="stop-color:#e84393;stop-opacity:0.6"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="#fff"/>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#fefefe"/>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="0" y="0" width="1200" height="8" fill="#e84393"/>
-  <text x="600" y="260" font-size="120" text-anchor="middle">🎨</text>
-  <text x="600" y="380" font-family="system-ui,sans-serif" font-size="48" font-weight="700" fill="#333" text-anchor="middle">艺术与音乐素养</text>
-  <text x="600" y="450" font-family="system-ui,sans-serif" font-size="28" fill="#888" text-anchor="middle">童心灯塔 · 成长故事馆</text>
-  <text x="600" y="520" font-family="system-ui,sans-serif" font-size="20" fill="#aaa" text-anchor="middle">面向 4-14 岁孩子与家长的家庭成长站</text>
+  <!-- Decorative circles -->
+  <circle cx="1050" cy="100" r="180" fill="#e84393" opacity="0.06"/>
+  <circle cx="150" cy="530" r="120" fill="#e84393" opacity="0.05"/>
+  <!-- Top bar -->
+  <rect x="0" y="0" width="1200" height="8" fill="url(#bar)"/>
+  <!-- Emoji -->
+  <text x="600" y="240" font-size="110" text-anchor="middle">🎨</text>
+  <!-- Title -->
+  <text x="600" y="370" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="52" font-weight="800" fill="#2d2d2d" text-anchor="middle">艺术与音乐素养</text>
+  <!-- Divider -->
+  <rect x="540" y="400" width="120" height="3" rx="2" fill="#e84393" opacity="0.5"/>
+  <!-- Site name -->
+  <text x="600" y="460" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="26" fill="#888" text-anchor="middle">童心灯塔 · 成长故事馆</text>
+  <!-- Tagline -->
+  <text x="600" y="510" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="20" fill="#aaa" text-anchor="middle">面向 4–14 岁孩子与家长的家庭成长站</text>
 </svg>

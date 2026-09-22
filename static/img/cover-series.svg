@@ -1,29 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e26d8a;stop-opacity:0.12"/>
-      <stop offset="50%" style="stop-color:#e26d8a;stop-opacity:0.06"/>
-      <stop offset="100%" style="stop-color:#e26d8a;stop-opacity:0.15"/>
+      <stop offset="0%" style="stop-color:#e9773f;stop-opacity:0.12"/>
+      <stop offset="50%" style="stop-color:#e9773f;stop-opacity:0.06"/>
+      <stop offset="100%" style="stop-color:#e9773f;stop-opacity:0.15"/>
     </linearGradient>
     <linearGradient id="bar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#e26d8a"/>
-      <stop offset="100%" style="stop-color:#e26d8a;stop-opacity:0.6"/>
+      <stop offset="0%" style="stop-color:#e9773f"/>
+      <stop offset="100%" style="stop-color:#e9773f;stop-opacity:0.6"/>
     </linearGradient>
   </defs>
   <!-- Background -->
   <rect width="1200" height="630" fill="#fefefe"/>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <!-- Decorative circles -->
-  <circle cx="1050" cy="100" r="180" fill="#e26d8a" opacity="0.06"/>
-  <circle cx="150" cy="530" r="120" fill="#e26d8a" opacity="0.05"/>
+  <circle cx="1050" cy="100" r="180" fill="#e9773f" opacity="0.06"/>
+  <circle cx="150" cy="530" r="120" fill="#e9773f" opacity="0.05"/>
   <!-- Top bar -->
   <rect x="0" y="0" width="1200" height="8" fill="url(#bar)"/>
   <!-- Emoji -->
-  <text x="600" y="240" font-size="110" text-anchor="middle">💗</text>
+  <text x="600" y="240" font-size="110" text-anchor="middle">📚</text>
   <!-- Title -->
-  <text x="600" y="370" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="52" font-weight="800" fill="#2d2d2d" text-anchor="middle">情绪与心理健康</text>
+  <text x="600" y="370" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="52" font-weight="800" fill="#2d2d2d" text-anchor="middle">故事系列</text>
   <!-- Divider -->
-  <rect x="540" y="400" width="120" height="3" rx="2" fill="#e26d8a" opacity="0.5"/>
+  <rect x="540" y="400" width="120" height="3" rx="2" fill="#e9773f" opacity="0.5"/>
   <!-- Site name -->
   <text x="600" y="460" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="26" fill="#888" text-anchor="middle">童心灯塔 · 成长故事馆</text>
   <!-- Tagline -->
