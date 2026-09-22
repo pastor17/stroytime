@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pastor17.github.io/stroytime/sitemap.xml
